@@ -1,10 +1,11 @@
 # MyGarden
 
--A PERN stack Web Application with CRUD operations
+## Objective:
 
-## Objective
+MyGarden is an application that allows anyone to easily plot an edible garden, based on their needs. Users can focus on the more relaxed motions of building and watching their efforts come to fruition. 
 
-MyGarden is an application that allows anyone to easily plot an edible garden, based on their needs. Gardening is necessary for our mental and physical health. This app serves to remove the hassles of researching how to grow vegetables and herbs and provides directions for the user based on the user’s selections. Users can focus on the more relaxed motions of building and watching their efforts literally come to fruition. This is important to me because I’ve watched several of my plants die off or flourish without a real understanding of why, so I’m taking away the headache of research for others and setting them on a path to success.
+## Installation:
+<adding instructions after completion of MVP1>
 
 ## Technologies:
 
@@ -12,7 +13,8 @@ MyGarden is an application that allows anyone to easily plot an edible garden, b
 2. Express, backend
 3. React, frontend
 4. NodeJS, serving Express and React
-5. Heroku and GitHub, deployment
+
+[//]: # "5. Heroku and GitHub, deployment"
 
 ## Application Programming Interfaces:
 

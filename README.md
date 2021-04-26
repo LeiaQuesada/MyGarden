@@ -63,6 +63,7 @@ MyGarden is an application that allows anyone to easily plot an edible garden, b
 - Figure out appropriate conditionals to display great suggestions for plants and the corresponding care instructions
 - Need to design clean display content with CSS 
 
+## ![schema] (Schema/Schema.png)
+
 ## Supplemental Readings:
 - Biointensive Farming Growing Ecosystems of Hope
-

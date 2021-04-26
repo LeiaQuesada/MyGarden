@@ -71,7 +71,26 @@ MyGarden is an application that allows anyone to easily plot an edible garden, b
 - Figure out appropriate conditionals to display great suggestions for plants and the corresponding care instructions
 - Need to design clean display content with CSS
 
-## ![schema](Schema/Schema.png)
+## Database Schema
+
+![schema](Schema/Schema.png)
+
+## Wireframes
+
+![home page screen](Wireframes/homescreen.png)
+![login screen](Wireframes/login.png)
+![Sign up screen](Wireframes/signup.png)
+![profile info screen](Wireframes/profile.png)
+![plant recommendations based on user's zone](Wireframes/zone.png)
+![selected plant information](Wireframes/plantid.png)
+![add plant to user's garden](Wireframes/addplant.png)
+![user's garden summary of plant groupings and recommended articles](Wireframes/gardensummary.png)
+![recommendations for plant companions](Wireframes/compatiblitysuggestions.png)
+![container plant grouping screen](Wireframes/containercontents.png)
+![vegetable recommendations](Wireframes/vegetablerecommendations.png)
+![alternate screen for recommendations/search](Wireframes/alternaterecommendationscreen.png)
+![articles for general instructions](Wireframes/articles.png)
+
 
 ## Supplemental Readings:
 

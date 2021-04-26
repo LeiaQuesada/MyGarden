@@ -1,0 +1,32 @@
+# React Client App
+
+This project was bootstrapped with [Create React
+App](https://github.com/facebook/create-react-app).
+
+## Project Structure
+
+### `App.js`
+
+This is where all of our React components live. Notice the `App` component
+doesn't make API calls directly, but delegates that responsibility to the
+`apiClient` module.
+
+### `apiClient.js`
+
+The functions in this module are responsible for talking to the Express API
+server.
+
+We use the [browser built-in `fetch` function][fetch] to perform the HTTP
+communication.
+
+Notice that we always translate the reponse from JSON to JavaScript object
+[using the Body.json() method][response.json].
+
+## Proxy the Express Server
+
+[See the Create React App documentation for an explanation of why we want to
+proxy our API server][cra-proxy].
+
+[cra-proxy]: https://create-react-app.dev/docs/proxying-api-requests-in-development/
+[fetch]: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+[response.json]: https://developer.mozilla.org/en-US/docs/Web/API/Body/json

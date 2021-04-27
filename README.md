@@ -2,9 +2,12 @@
 
 ## Objective:
 
-MyGarden is an application that allows anyone to easily plot an edible garden, based on their needs. Users can focus on the more relaxed motions of building and watching their efforts come to fruition. 
+MyGarden is an application that allows anyone to easily plot an edible garden, based on their needs. Users can focus on the more relaxed motions of building and watching their efforts come to fruition.
+
+### [<ins>MyGarden deployed via Heroku</ins>](https://getmygarden.herokuapp.com/)
 
 ## Installation:
+
 <adding instructions after completion of MVP1>
 
 ## Technologies:
@@ -18,16 +21,18 @@ MyGarden is an application that allows anyone to easily plot an edible garden, b
 
 ## Application Programming Interfaces:
 
-1. Auth0 (authentication)
-2. Google’s Weather
-3. Zoning & Vegetation (Trefle)
-4. Plant Hardiness Zones (Walkdoj)
-5. Plants For A Future Database
-6. Tropical Fruit and Veg
-7. growstuff.org
+1. [Auth0 (authentication)](https://cloud.google.com/endpoints/docs/openapi/authenticating-users-auth0?hl=en&_ga=2.68038099.-376004971.1618853601)
+2. [OpenWeatherMap API](https://openweathermap.org/api/one-call-api)
+3. [Zoning & Vegetation (Trefle)](https://docs.trefle.io/docs/examples/snippets/)
+4. [Plant Hardiness Zones (Walkdoj)](https://github.com/waldoj/frostline)
+5. [Plants For A Future Database](https://pfaf.org/user/Default.aspx)
+6. [Tropical Fruit and Veg](http://tropicalfruitandveg.com/tfvapi.php)
+7. [growstuff.org](https://github.com/Growstuff/growstuff/wiki/API-Version-0)
    - Alpha quality software as of 2014
 
 ## Minimal Viable Product Priorities:
+
+### [<ins>Google Doc for MyGarden Project development</ins>](https://docs.google.com/document/d/1HtaY2To8yLveDVoQvEU87eZn97pXQrGPm29APZE1Gio/edit?usp=sharing)
 
 ### MVP 1:
 
@@ -73,26 +78,29 @@ MyGarden is an application that allows anyone to easily plot an edible garden, b
 - Figure out appropriate conditionals to display great suggestions for plants and the corresponding care instructions
 - Need to design clean display content with CSS
 
-## Database Schema
+## Database Schema:
 
-![schema](Schema/Schema.png)
+![schema](Screenshots/Schema.png)
 
-## Wireframes
+## User Flowchart:
 
-![home page screen](Wireframes/homescreen.png)
-![login screen](Wireframes/login.png)
-![Sign up screen](Wireframes/signup.png)
-![profile info screen](Wireframes/profile.png)
-![plant recommendations based on user's zone](Wireframes/zone.png)
-![selected plant information](Wireframes/plantid.png)
-![add plant to user's garden](Wireframes/addplant.png)
-![user's garden summary of plant groupings and recommended articles](Wireframes/gardensummary.png)
-![recommendations for plant companions](Wireframes/compatiblitysuggestions.png)
-![container plant grouping screen](Wireframes/containercontents.png)
-![vegetable recommendations](Wireframes/vegetablerecommendations.png)
-![alternate screen for recommendations/search](Wireframes/alternaterecommendationscreen.png)
-![articles for general instructions](Wireframes/articles.png)
+![user flow](Screenshots/userflow.png)
 
+## Wireframes:
+
+![home page screen](Screenshots/homescreen.png)
+![login screen](Screenshots/login.png)
+![Sign up screen](Screenshots/signup.png)
+![profile info screen](Screenshots/profile.png)
+![plant recommendations based on user's zone](Screenshots/zone.png)
+![selected plant information](Screenshots/plantid.png)
+![add plant to user's garden](Screenshots/addplant.png)
+![user's garden summary of plant groupings and recommended articles](Screenshots/gardensummary.png)
+![recommendations for plant companions](Screenshots/compatiblitysuggestions.png)
+![container plant grouping screen](Screenshots/containercontents.png)
+![vegetable recommendations](Screenshots/vegetablerecommendations.png)
+![alternate screen for recommendations/search](Screenshots/alternaterecommendationscreen.png)
+![articles for general instructions](Screenshots/articles.png)
 
 ## Supplemental Readings:
 

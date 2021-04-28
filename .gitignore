@@ -10,3 +10,8 @@ tmp/nanoc/
 crash.log
 
 .DS_Store
+
+.data/
+.env
+.envrc
+node_modules/

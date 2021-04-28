@@ -2,7 +2,7 @@ import React from "react";
 
 import { useAuth0 } from "@auth0/auth0-react";
 
-const AuthButtons = () => {
+const App = () => {
   const {
     loginWithRedirect,
     logout,
@@ -31,4 +31,4 @@ const AuthButtons = () => {
   }
 };
 
-export default AuthButtons;
+export default App;

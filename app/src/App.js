@@ -1,55 +1,34 @@
-import * as React from "react";
+import React from "react";
 
-import * as apiClient from "./apiClient";
+import { useAuth0 } from "@auth0/auth0-react";
 
-const App = () => {
-  const [tasks, setTasks] = React.useState([]);
+const AuthButtons = () => {
+  const {
+    loginWithRedirect,
+    logout,
+    user,
+    isAuthenticated,
+    isLoading,
+  } = useAuth0();
 
-  const loadTasks = async () => setTasks(await apiClient.getTasks());
+  if (isLoading) {
+    return <div>Loading ...</div>;
+  }
 
-  React.useEffect(() => {
-    loadTasks();
-  }, []);
-
-  return (
-    <main className="App">
-      <TaskList tasks={tasks} />
-      <AddTask loadTasks={loadTasks} />
-    </main>
-  );
+  if (isAuthenticated) {
+    return (
+      <div>
+        <img src={user.picture} alt={user.name} />
+        <h2>{user.name}</h2>
+        <p>{user.email}</p>
+        <button onClick={() => logout({ returnTo: window.location.origin })}>
+          Log Out
+        </button>
+      </div>
+    );
+  } else {
+    return <button onClick={() => loginWithRedirect()}>Log In</button>;
+  }
 };
 
-const TaskList = ({ tasks }) => (
-  <ul>
-    {tasks.map(({ id, name }) => (
-      <li key={id}>{name}</li>
-    ))}
-  </ul>
-);
-
-const AddTask = ({ loadTasks }) => {
-  const [task, setTask] = React.useState("");
-
-  const canAdd = task !== "";
-
-  const onSubmit = async (e) => {
-    e.preventDefault();
-    if (canAdd) {
-      await apiClient.addTask(task);
-      loadTasks();
-      setTask("");
-    }
-  };
-
-  return (
-    <form onSubmit={onSubmit}>
-      <label>
-        New task:{" "}
-        <input onChange={(e) => setTask(e.currentTarget.value)} value={task} />
-      </label>
-      <button disabled={!canAdd}>Add</button>
-    </form>
-  );
-};
-
-export default App;
+export default AuthButtons;

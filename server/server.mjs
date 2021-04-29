@@ -60,9 +60,9 @@ app.get("/api/ping", (request, response) =>
   response.json({ response: "pong" }),
 );
 
-// protected test, route https://auth0.com/docs/quickstart/backend/nodejs
+// protected test, https://auth0.com/docs/quickstart/backend/nodejs
 app.get("/api/test", checkJwt, (request, response) =>
-  response.json({ response: "pass" }),
+  response.json({ response: "this is an authenticated request/response" }),
 );
 
 app.listen(port, () => {

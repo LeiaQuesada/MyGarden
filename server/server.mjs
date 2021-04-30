@@ -1,10 +1,34 @@
 import express from "express";
+import jwt from "express-jwt";
+import jwksRsa from "jwks-rsa";
 import mime from "mime-types";
 
 import * as db from "./db.mjs";
 
 const app = express();
 const port = process.env.PORT || 4000;
+// TODO: CONSIDER checking scopes
+// import jwtAuthz from "express-jwt-authz";
+
+// Authorization middleware. When used, the
+// Access Token must exist and be verified against
+// the Auth0 JSON Web Key Set
+const checkJwt = jwt({
+  // Dynamically provide a signing key
+  // based on the kid in the header and
+  // the signing keys provided by the JWKS endpoint.
+  secret: jwksRsa.expressJwtSecret({
+    cache: true,
+    rateLimit: true,
+    jwksRequestsPerMinute: 5,
+    jwksUri: `https://dev-wbfyt2d4.us.auth0.com/.well-known/jwks.json`,
+  }),
+
+  // Validate the audience and the issuer.
+  audience: "https://dev-wbfyt2d4.us.auth0.com/api/v2/",
+  issuer: [`https://dev-wbfyt2d4.us.auth0.com/`],
+  algorithms: ["RS256"],
+});
 
 const tasks = express.Router();
 
@@ -34,6 +58,11 @@ process.env?.SERVE_REACT?.toLowerCase() === "true" &&
 
 app.get("/api/ping", (request, response) =>
   response.json({ response: "pong" }),
+);
+
+// protected test, https://auth0.com/docs/quickstart/backend/nodejs
+app.get("/api/test", checkJwt, (request, response) =>
+  response.json({ response: "this is an authenticated request/response" }),
 );
 
 app.listen(port, () => {

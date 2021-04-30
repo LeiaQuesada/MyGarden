@@ -11,11 +11,23 @@ const App = () => {
     user,
     isAuthenticated,
     isLoading,
+    getAccessTokenSilently,
   } = useAuth0();
 
   if (isLoading) {
     return <div>Loading ...</div>;
   }
+  const testAuth = async () => {
+    const token = await getAccessTokenSilently();
+    const response = await fetch("/api/test", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    let resObject = await response.json();
+    alert(resObject.response);
+    return resObject;
+  };
 
   if (isAuthenticated) {
     return (
@@ -27,6 +39,7 @@ const App = () => {
           <button onClick={() => logout({ returnTo: window.location.origin })}>
             Log Out
           </button>
+          <button onClick={testAuth}>Test express Authentication</button>
         </div>
       </div>
     );

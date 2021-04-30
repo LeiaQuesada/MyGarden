@@ -12,9 +12,9 @@ ReactDOM.render(
     <>
       <h1>MyGarden</h1>
       <Auth0Provider
-        domain="dev-wbfyt2d4.us.auth0.com"
-        clientId="qAVrIAowOt9AM2e1pWSfWDLDgBJfAqX6"
-        redirectUri={window.location.origin}
+        domain="dev-wbfyt2d4.us.auth0.com" // from Single Page app
+        clientId="qAVrIAowOt9AM2e1pWSfWDLDgBJfAqX6" // from SPA
+        audience="https://dev-wbfyt2d4.us.auth0.com/api/v2/" // from API
       >
         <App />
       </Auth0Provider>

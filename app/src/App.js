@@ -35,7 +35,7 @@ const App = () => {
   if (isAuthenticated) {
     return (
       <>
-        <div class="header">
+        <div className="header">
           <div id="user-info">
             <div id="left">
               <img id="userpic" src={user.picture} alt={user.name} />
@@ -57,7 +57,7 @@ const App = () => {
   } else {
     return (
       <>
-        <div class="header">
+        <div className="header">
           <div id="user-info">
             <button onClick={() => loginWithRedirect()}>Log In</button>
           </div>

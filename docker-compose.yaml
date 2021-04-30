@@ -3,7 +3,7 @@ version: "3.8"
 services:
   db:
     image: postgres:13-alpine
-    container_name: example-db
+    container_name: mygarden
     hostname: db
     env_file:
       - .env

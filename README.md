@@ -1,12 +1,12 @@
 # MyGarden
 
-# Objective:
+## Objective:
 
 MyGarden is an application that allows anyone to easily plot an edible garden. Users can focus on the more relaxed motions of building and watching their efforts come to fruition.
 
 ### [<ins>MyGarden deployed via Heroku</ins>](https://getmygarden.herokuapp.com/)
 
-# Installation:
+## Installation:
 
 ## Prerequisites
 
@@ -92,7 +92,7 @@ Visit <http://localhost:3000>.
 npm run psql
 ```
 
-# Technologies:
+## Technologies:
 
 1. PostgreSQL, Object-Relational Database
 2. Express, backend
@@ -101,7 +101,7 @@ npm run psql
 
 [//]: # "5. Heroku and GitHub, deployment"
 
-# Application Programming Interfaces:
+## Application Programming Interfaces:
 
 1. [Auth0 (authentication)](https://cloud.google.com/endpoints/docs/openapi/authenticating-users-auth0?hl=en&_ga=2.68038099.-376004971.1618853601)
 2. [OpenWeatherMap API](https://openweathermap.org/api/one-call-api)
@@ -112,7 +112,7 @@ npm run psql
 7. [growstuff.org](https://github.com/Growstuff/growstuff/wiki/API-Version-0)
    - Alpha quality software as of 2014
 
-# Minimal Viable Product Priorities:
+## Minimal Viable Product Priorities:
 
 ### [<ins>Google Doc for MyGarden Project development</ins>](https://docs.google.com/document/d/1HtaY2To8yLveDVoQvEU87eZn97pXQrGPm29APZE1Gio/edit?usp=sharing)
 
@@ -152,7 +152,7 @@ npm run psql
       - Crop rotation
       - Repotting
 
-# Technical Risks:
+## Technical Risks:
 
 - PLENTY! First time exploring external API calls
 - Auth0 is said to be difficult to set up, if this takes longer than a day, MVPs may need to be shortened and re-assigned
@@ -160,15 +160,15 @@ npm run psql
 - Figure out appropriate conditionals to display great suggestions for plants and the corresponding care instructions
 - Need to design clean display content with CSS
 
-# Database Schema:
+## Database Schema:
 
 ![schema](Screenshots/Schema.png)
 
-# User Flowchart:
+## User Flowchart:
 
 ![user flow](Screenshots/userflow.png)
 
-# Wireframes:
+## Wireframes:
 
 ![home page screen](Screenshots/homescreen.png)
 ![login screen](Screenshots/login.png)
@@ -184,6 +184,6 @@ npm run psql
 ![alternate screen for recommendations/search](Screenshots/alternaterecommendationscreen.png)
 ![articles for general instructions](Screenshots/articles.png)
 
-# Supplemental Readings:
+## Supplemental Readings:
 
 - Biointensive Farming Growing Ecosystems of Hope

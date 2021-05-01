@@ -30,21 +30,32 @@ const checkJwt = jwt({
   algorithms: ["RS256"],
 });
 
-const tasks = express.Router();
+const user = express.Router();
 
-tasks.get("/", async (request, response) => {
-  const tasks = await db.getTasks();
-  response.json(tasks);
+user.use(express.json());
+
+user.get("/:email", async (request, response) => {
+  let dbUser = await db.getUser(request.params.email);
+
+  if (!dbUser) {
+    //user does not exist, so create user with just the email
+    dbUser = db.createUser(request.params.email);
+  }
+  const responseUser = {
+    userName: dbUser.username,
+    phoneNumber: dbUser.phone,
+    zipCode: dbUser.zipcode,
+  };
+  response.status(200).json(responseUser);
 });
 
-tasks.use(express.json());
-tasks.post("/", async (request, response) => {
-  const { name } = request.body;
-  const task = await db.addTask(name);
-  response.status(201).json(task);
+user.post("/", async (request, response) => {
+  const userIn = request.body;
+  const userOut = await db.updateUser(userIn);
+  response.status(200).json(userOut);
 });
 
-app.use("/api/tasks", tasks);
+app.use("/api/user", checkJwt, user);
 
 process.env?.SERVE_REACT?.toLowerCase() === "true" &&
   app.use(
@@ -58,11 +69,6 @@ process.env?.SERVE_REACT?.toLowerCase() === "true" &&
 
 app.get("/api/ping", (request, response) =>
   response.json({ response: "pong" }),
-);
-
-// protected test, https://auth0.com/docs/quickstart/backend/nodejs
-app.get("/api/test", checkJwt, (request, response) =>
-  response.json({ response: "this is an authenticated request/response" }),
 );
 
 app.listen(port, () => {

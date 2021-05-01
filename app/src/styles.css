@@ -1,4 +1,4 @@
-#main {
+body {
   background-color: #f6eee5;
 }
 
@@ -11,19 +11,21 @@ h1 {
 
 .header {
   background: #cdded6;
-  padding: 80px;
   text-align: center;
+  flex-wrap: wrap;
+  display: flex;
+  justify-content: space-between;
+  padding: 12px;
   top: 0;
   left: 0;
-  /* position: fixed; */
   right: 0;
 }
 
-h1 {
+/* h1 {
   float: left;
   padding: 1rem;
   text-align: left;
-}
+} */
 
 #userpic {
   width: 75px;
@@ -34,16 +36,35 @@ h1 {
   float: right;
 }
 
+form {
+  width: 80%;
+  max-width: 800px;
+}
+
+.UserProfile {
+  padding-top: 1rem;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
 .form-control {
   display: flex;
   flex-direction: column;
   margin-bottom: 10px;
-  margin-top: 150px;
 }
 
 .form-control input {
   padding: 5px;
-  width: 80%;
+  width: calc(100% - 10px);
+}
+
+button {
+  border-radius: 4px;
+  padding: 15px 32px;
+  display: inline-block;
+  font-size: 1rem;
+  width: 100%;
 }
 
 footer {
@@ -54,12 +75,4 @@ footer {
   position: fixed;
   right: 0;
   margin: 7px;
-}
-
-button {
-  border: 20px, solid, #f6bcae;
-  border-radius: 4px;
-  padding: 15px 32px;
-  display: inline-block;
-  font-size: 1rem;
 }

@@ -10,10 +10,9 @@ import reportWebVitals from "./reportWebVitals";
 ReactDOM.render(
   <React.StrictMode>
     <>
-      <h1>MyGarden</h1>
       <Auth0Provider
-        domain="dev-wbfyt2d4.us.auth0.com" // from Single Page app
-        clientId="qAVrIAowOt9AM2e1pWSfWDLDgBJfAqX6" // from SPA
+        domain="dev-wbfyt2d4.us.auth0.com" // from Single Page App
+        clientId="qAVrIAowOt9AM2e1pWSfWDLDgBJfAqX6" // from SPA ^^
         audience="https://dev-wbfyt2d4.us.auth0.com/api/v2/" // from API
         redirectUri={window.location.origin}
       >

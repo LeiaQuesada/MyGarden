@@ -36,6 +36,7 @@ const App = () => {
     return (
       <>
         <div className="header">
+          <h1>MyGarden</h1>
           <div id="user-info">
             <div id="left">
               <img id="userpic" src={user.picture} alt={user.name} />

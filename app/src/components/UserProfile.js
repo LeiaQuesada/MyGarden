@@ -22,6 +22,10 @@ export default function UserProfile() {
 
   const updateUser = async (event) => {
     event.preventDefault();
+    // check input value for zipcode with regex pattern
+    if (/^\d{5}$/.test(state.zipCode) === false) {
+      alert("Please enter valid 5 digit zipcode");
+    }
     const zoneResponse = await fetch(
       `https://phzmapi.org/${state.zipCode}.json`,
     );
@@ -74,8 +78,6 @@ export default function UserProfile() {
     fetchData();
   }, []);
 
-  //TODO: validate Zip
-
   return (
     <div className="UserProfile">
       <h3>
@@ -107,7 +109,7 @@ export default function UserProfile() {
             Zip Code
             <br />
             <input
-              type="text"
+              type="number"
               name="zipCode"
               value={state.zipCode}
               onChange={handleInputChange}

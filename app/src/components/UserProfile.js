@@ -79,46 +79,58 @@ export default function UserProfile() {
   }, []);
 
   return (
-    <div className="UserProfile">
-      <h3>
-        {state.userName}'s Zone: {state.zone}
-      </h3>
-      <form>
-        <div className="form-control">
-          <label id="userName">
-            Your Preferred Name
-            <br />
-            <input
-              type="text"
-              name="userName"
-              value={state.userName}
-              onChange={handleInputChange}
-            />
-          </label>
-          <label id="phoneNumber">
-            Phone Number for Text Alerts
-            <br />
-            <input
-              type="tel"
-              name="phoneNumber"
-              value={state.phoneNumber}
-              onChange={handleInputChange}
-            />
-          </label>
-          <label id="zipCode">
-            Zip Code
-            <br />
-            <input
-              type="number"
-              name="zipCode"
-              value={state.zipCode}
-              onChange={handleInputChange}
-            />
-          </label>
-          <br />
-          <button onClick={updateUser}>Update your Zone</button>
+    <>
+      <div className="outer">
+        <div id="userZone">
+          <h3>
+            {!state.zone
+              ? `Enter zipcode to find your zone`
+              : `${
+                  state.userName && state.userName !== ""
+                    ? state.userName
+                    : user.email.slice(0, user.email.indexOf("@"))
+                }'s Zone: ${state.zone}`}
+          </h3>
         </div>
-      </form>
-    </div>
+      </div>
+      <div className="UserProfile">
+        <form>
+          <div className="form-control">
+            <label id="userName">
+              Your Preferred Name
+              <br />
+              <input
+                type="text"
+                name="userName"
+                value={state.userName}
+                onChange={handleInputChange}
+              />
+            </label>
+            <label id="phoneNumber">
+              Phone Number for Text Alerts
+              <br />
+              <input
+                type="tel"
+                name="phoneNumber"
+                value={state.phoneNumber}
+                onChange={handleInputChange}
+              />
+            </label>
+            <label id="zipCode">
+              Zip Code
+              <br />
+              <input
+                type="number"
+                name="zipCode"
+                value={state.zipCode}
+                onChange={handleInputChange}
+              />
+            </label>
+            <br />
+            <button onClick={updateUser}>Update your Zone</button>
+          </div>
+        </form>
+      </div>
+    </>
   );
 }

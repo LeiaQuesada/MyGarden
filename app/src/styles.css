@@ -40,6 +40,10 @@ form {
   width: 80%;
   max-width: 800px;
 }
+.outer {
+  display: flex;
+  justify-content: center;
+}
 
 .UserProfile {
   padding-top: 1rem;

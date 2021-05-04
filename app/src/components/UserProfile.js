@@ -28,6 +28,7 @@ export default function UserProfile() {
       phoneNumber: state.phoneNumber,
       zipCode: state.zipCode,
     };
+    // TODO error handling
     const response = await fetch("/api/user", {
       method: "POST",
       headers: {
@@ -51,9 +52,9 @@ export default function UserProfile() {
       });
       const u = await response.json();
       setState({
-        userName: u.userName,
-        phoneNumber: u.phoneNumber,
-        zipCode: u.zipCode,
+        userName: u.userName || "",
+        phoneNumber: u.phoneNumber || "",
+        zipCode: u.zipCode || "",
       });
     }
     fetchData();

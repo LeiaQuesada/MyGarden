@@ -51,8 +51,12 @@ user.get("/:email", async (request, response) => {
 
 user.post("/", async (request, response) => {
   const userIn = request.body;
-  const userOut = await db.updateUser(userIn);
-  response.status(200).json(userOut);
+  const isUserUpdated = await db.updateUser(userIn);
+  if (isUserUpdated) {
+    response.status(200).json({ success: true });
+  } else {
+    response.status(200).json({ success: false });
+  }
 });
 
 app.use("/api/user", checkJwt, user);

@@ -9,8 +9,8 @@ export const getUser = async (email) =>
 export const updateUser = async (u) => {
   try {
     await db.none(
-      "UPDATE users SET username = $1, phone = $2, zipcode = $3 WHERE email=$4;",
-      [u.userName, u.phoneNumber, u.zipCode, u.email],
+      "UPDATE users SET username = $1, phone = $2, zipcode = $3, zone = $4 WHERE email=$5;",
+      [u.userName, u.phoneNumber, u.zipCode, u.zone, u.email],
     );
     return true;
   } catch (err) {

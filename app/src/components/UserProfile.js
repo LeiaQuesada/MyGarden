@@ -10,6 +10,7 @@ export default function UserProfile() {
     userName: "",
     phoneNumber: "",
     zipCode: "",
+    zone: "",
   });
 
   const handleInputChange = (event) => {
@@ -21,14 +22,24 @@ export default function UserProfile() {
 
   const updateUser = async (event) => {
     event.preventDefault();
+    const zoneResponse = await fetch(
+      `https://phzmapi.org/${state.zipCode}.json`,
+    );
+    const zoneObj = await zoneResponse.json();
+    setState({
+      userName: state.userName,
+      phoneNumber: state.phoneNumber,
+      zipCode: state.zipCode,
+      zone: zoneObj.zone,
+    });
     const token = await getAccessTokenSilently();
     let userObject = {
       email: user.email,
       userName: state.userName,
       phoneNumber: state.phoneNumber,
       zipCode: state.zipCode,
+      zone: zoneObj.zone,
     };
-    // TODO error handling
     const response = await fetch("/api/user", {
       method: "POST",
       headers: {
@@ -37,14 +48,16 @@ export default function UserProfile() {
       },
       body: JSON.stringify(userObject),
     });
-    return await response.json();
+    const responseObj = await response.json();
+    if (!responseObj.success) {
+      alert("Could not update your user profile");
+    }
   };
 
   useEffect(() => {
     async function fetchData() {
       const token = await getAccessTokenSilently();
 
-      // You can await here
       const response = await fetch(`/api/user/${user.email}`, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -55,6 +68,7 @@ export default function UserProfile() {
         userName: u.userName || "",
         phoneNumber: u.phoneNumber || "",
         zipCode: u.zipCode || "",
+        zone: u.zone || "",
       });
     }
     fetchData();
@@ -64,6 +78,9 @@ export default function UserProfile() {
 
   return (
     <div className="UserProfile">
+      <h3>
+        {state.userName}'s Zone: {state.zone}
+      </h3>
       <form>
         <div className="form-control">
           <label id="userName">

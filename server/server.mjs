@@ -45,6 +45,7 @@ user.get("/:email", async (request, response) => {
     userName: dbUser.username,
     phoneNumber: dbUser.phone,
     zipCode: dbUser.zipcode,
+    zone: dbUser.zone,
   };
   response.status(200).json(responseUser);
 });

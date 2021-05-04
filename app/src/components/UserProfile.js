@@ -1,11 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../styles.css";
 
+import { useAuth0 } from "@auth0/auth0-react";
+
 export default function UserProfile() {
+  const { user, getAccessTokenSilently } = useAuth0();
+
   const [state, setState] = useState({
     userName: "",
     phoneNumber: "",
-    userLocation: "",
+    zipCode: "",
   });
 
   const handleInputChange = (event) => {
@@ -15,14 +19,52 @@ export default function UserProfile() {
     }));
   };
 
-  const handleSubmit = (event) => {
+  const updateUser = async (event) => {
     event.preventDefault();
-    console.log(state);
+    const token = await getAccessTokenSilently();
+    let userObject = {
+      email: user.email,
+      userName: state.userName,
+      phoneNumber: state.phoneNumber,
+      zipCode: state.zipCode,
+    };
+    // TODO error handling
+    const response = await fetch("/api/user", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userObject),
+    });
+    return await response.json();
   };
+
+  useEffect(() => {
+    async function fetchData() {
+      const token = await getAccessTokenSilently();
+
+      // You can await here
+      const response = await fetch(`/api/user/${user.email}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const u = await response.json();
+      setState({
+        userName: u.userName || "",
+        phoneNumber: u.phoneNumber || "",
+        zipCode: u.zipCode || "",
+      });
+    }
+    fetchData();
+  }, []);
+
+  //TODO: validate Zip
 
   return (
     <div className="UserProfile">
-      <form onSubmit={handleSubmit}>
+      <form>
         <div className="form-control">
           <label id="userName">
             Your Preferred Name
@@ -44,18 +86,18 @@ export default function UserProfile() {
               onChange={handleInputChange}
             />
           </label>
-          <label id="userLocation">
-            Location
+          <label id="zipCode">
+            Zip Code
             <br />
             <input
               type="text"
-              name="userLocation"
-              value={state.userLocation}
+              name="zipCode"
+              value={state.zipCode}
               onChange={handleInputChange}
             />
           </label>
           <br />
-          <button type="submit">Submit</button>
+          <button onClick={updateUser}>Update your Zone</button>
         </div>
       </form>
     </div>

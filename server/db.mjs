@@ -3,14 +3,25 @@ import pgp from "pg-promise";
 
 const db = initDb();
 
-export const getTasks = async () => await db.any("SELECT * FROM tasks");
+export const getUser = async (email) =>
+  (await db.any("SELECT * FROM users WHERE email = $1;", [email]))[0];
 
-export const addTask = async (name) =>
-  (
-    await db.any("INSERT INTO tasks(name) VALUES($1) RETURNING id, name", [
-      name,
-    ])
-  )[0];
+export const updateUser = async (u) => {
+  try {
+    await db.none(
+      "UPDATE users SET username = $1, phone = $2, zipcode = $3 WHERE email=$4;",
+      [u.userName, u.phoneNumber, u.zipCode, u.email],
+    );
+    return true;
+  } catch (err) {
+    console.error(err);
+    return false;
+  }
+};
+
+export const createUser = async (email) => {
+  (await db.any("INSERT INTO users (email) VALUES ($1)", [email]))[0];
+};
 
 function initDb() {
   let connection;

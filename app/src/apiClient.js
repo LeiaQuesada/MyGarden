@@ -1,4 +1,4 @@
-import { useAuth0 } from "@auth0/auth0-react";
+// import { useAuth0 } from "@auth0/auth0-react";
 
 export const getTasks = async () => {
   const response = await fetch("/api/tasks");
@@ -13,18 +13,18 @@ export const addTask = async (name) => {
     },
     body: JSON.stringify({ name }),
   });
-  return response.json();
+  return await response.json();
 };
 
-export const testAuth = async () => {
-  //FIXME: get JWT (need to resolve React-related error)
-  //const { getAccessTokenSilently } = useAuth0();
-  //const token = await getAccessTokenSilently();
+//  export const testAuth = async (token) => {
+//    // FIXME: get JWT (need to resolve React-related error)
+//    const { getAccessTokenSilently } = useAuth0();
+//    const token = await getAccessTokenSilently();
 
-  const response = await fetch("/api/test", {
-    //  headers: {
-    //    Authorization: `Bearer ${token}`,
-    // },
-  });
-  return response.json();
-};
+//    const response = await fetch("/api/test", {
+//      headers: {
+//        Authorization: `Bearer ${token}`,
+//      },
+//    });
+//    return await response.json();
+// };

@@ -20,7 +20,11 @@ export const updateUser = async (u) => {
 };
 
 export const createUser = async (email) => {
-  (await db.any("INSERT INTO users (email) VALUES ($1)", [email]))[0];
+  try {
+    await db.any("INSERT INTO users (email) VALUES ($1);", [email])[0];
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 function initDb() {

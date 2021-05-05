@@ -24,37 +24,42 @@ export default function UserProfile() {
     event.preventDefault();
     // check input value for zipcode with regex pattern
     if (/^\d{5}$/.test(state.zipCode) === false) {
-      alert("Please enter valid 5 digit zipcode");
+      alert("Please enter valid 5 digit zipcode.");
     }
-    const zoneResponse = await fetch(
-      `https://phzmapi.org/${state.zipCode}.json`,
-    );
-    const zoneObj = await zoneResponse.json();
-    setState({
-      userName: state.userName,
-      phoneNumber: state.phoneNumber,
-      zipCode: state.zipCode,
-      zone: zoneObj.zone,
-    });
-    const token = await getAccessTokenSilently();
-    let userObject = {
-      email: user.email,
-      userName: state.userName,
-      phoneNumber: state.phoneNumber,
-      zipCode: state.zipCode,
-      zone: zoneObj.zone,
-    };
-    const response = await fetch("/api/user", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(userObject),
-    });
-    const responseObj = await response.json();
-    if (!responseObj.success) {
-      alert("Could not update your user profile");
+    try {
+      const zoneResponse = await fetch(
+        `https://phzmapi.org/${state.zipCode}.json`,
+      );
+      const zoneObj = await zoneResponse.json();
+      setState({
+        userName: state.userName,
+        phoneNumber: state.phoneNumber,
+        zipCode: state.zipCode,
+        zone: zoneObj.zone,
+      });
+      const token = await getAccessTokenSilently();
+      let userObject = {
+        email: user.email,
+        userName: state.userName,
+        phoneNumber: state.phoneNumber,
+        zipCode: state.zipCode,
+        zone: zoneObj.zone,
+      };
+      const response = await fetch("/api/user", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userObject),
+      });
+      const responseObj = await response.json();
+      if (!responseObj.success) {
+        alert("Could not update your user profile.");
+      }
+    } catch (err) {
+      alert("Could not find your zipcode's corresponding zone.");
+      console.error(err);
     }
   };
 

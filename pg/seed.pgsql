@@ -1,7 +1,7 @@
 CREATE TABLE public.users (
-    user_id SERIAL PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     phone TEXT,
-    email TEXT,
+    email TEXT UNIQUE,
     zipcode INTEGER,
     username TEXT,
     zone TEXT

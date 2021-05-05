@@ -15,44 +15,39 @@ const App = () => {
     isLoading,
   } = useAuth0();
 
-  if (isLoading) {
-    return <div>Loading ...</div>;
-  }
-
-  if (isAuthenticated) {
-    return (
-      <>
-        <div className="header">
-          <h1>MyGarden</h1>
-          <div id="user-info">
-            <div id="left">
-              <img id="userpic" src={user.picture} alt={user.name} />
-            </div>
-            <div id="right">
-              <button
-                onClick={() => logout({ returnTo: window.location.origin })}
-              >
-                Log Out
-              </button>
+  return isLoading ? (
+    <div>Loading ...</div>
+  ) : (
+    <>
+      {isAuthenticated ? (
+        <>
+          <div className="header">
+            <h1>MyGarden</h1>
+            <div id="user-info">
+              <div id="left">
+                <img id="userpic" src={user.picture} alt={user.name} />
+              </div>
+              <div id="right">
+                <button
+                  onClick={() => logout({ returnTo: window.location.origin })}
+                >
+                  Log Out
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-        <UserProfile />
-        <footer>testing</footer>
-      </>
-    );
-  } else {
-    return (
-      <>
+          <UserProfile />
+        </>
+      ) : (
         <div className="header">
           <div id="user-info">
-            <button onClick={() => loginWithRedirect()}>Log In</button>
+            <button onClick={loginWithRedirect}>Log In</button>
           </div>
         </div>
-        <footer>testing</footer>
-      </>
-    );
-  }
+      )}
+      <footer>testing</footer>
+    </>
+  );
 };
 
 export default App;

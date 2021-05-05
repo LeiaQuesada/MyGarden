@@ -7,26 +7,19 @@ import * as db from "./db.mjs";
 
 const app = express();
 const port = process.env.PORT || 4000;
-// TODO: CONSIDER checking scopes
-// import jwtAuthz from "express-jwt-authz";
 
-// Authorization middleware. When used, the
-// Access Token must exist and be verified against
-// the Auth0 JSON Web Key Set
+const authDomain = "https://dev-wbfyt2d4.us.auth0.com";
+
 const checkJwt = jwt({
-  // Dynamically provide a signing key
-  // based on the kid in the header and
-  // the signing keys provided by the JWKS endpoint.
   secret: jwksRsa.expressJwtSecret({
     cache: true,
     rateLimit: true,
     jwksRequestsPerMinute: 5,
-    jwksUri: `https://dev-wbfyt2d4.us.auth0.com/.well-known/jwks.json`,
+    jwksUri: `${authDomain}/.well-known/jwks.json`,
   }),
 
-  // Validate the audience and the issuer.
-  audience: "https://dev-wbfyt2d4.us.auth0.com/api/v2/",
-  issuer: [`https://dev-wbfyt2d4.us.auth0.com/`],
+  audience: `${authDomain}/api/v2/`,
+  issuer: `${authDomain}/`,
   algorithms: ["RS256"],
 });
 
@@ -38,8 +31,7 @@ user.get("/:email", async (request, response) => {
   try {
     let dbUser = await db.getUser(request.params.email);
 
-    if (!dbUser) {
-      //user does not exist, so create user with just the email
+    if (dbUser === undefined) {
       dbUser = db.createUser(request.params.email);
     }
     const responseUser = {
@@ -50,17 +42,18 @@ user.get("/:email", async (request, response) => {
     };
     response.status(200).json(responseUser);
   } catch (err) {
+    // What's the purpose of the catch?
     console.error(err);
   }
 });
 
 user.post("/", async (request, response) => {
   try {
-    const userIn = request.body;
-    const isUserUpdated = await db.updateUser(userIn);
+    const isUserUpdated = await db.updateUser(request.body);
     if (isUserUpdated) {
       response.status(200).json({ success: true });
     } else {
+      // If user failed to update, it's definitley not 200!
       response.status(200).json({ success: false });
     }
   } catch (err) {
@@ -80,7 +73,10 @@ process.env?.SERVE_REACT?.toLowerCase() === "true" &&
     }),
   );
 
-// TODO deleting this breaks app, look into later
+// This is a heartbeat API endpoint. We use this in the development environment
+// to make sure the API server is started before trying to start the React dev
+// server. In production, you can set up monitoring against this API end point
+// to make sure your API server is alive.
 app.get("/api/ping", (request, response) =>
   response.json({ response: "pong" }),
 );

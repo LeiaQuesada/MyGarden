@@ -10,6 +10,7 @@ export default function UserProfile() {
     userName: "",
     phoneNumber: "",
     zipCode: "",
+    zone: "",
   });
 
   const handleInputChange = (event) => {
@@ -21,30 +22,51 @@ export default function UserProfile() {
 
   const updateUser = async (event) => {
     event.preventDefault();
-    const token = await getAccessTokenSilently();
-    let userObject = {
-      email: user.email,
-      userName: state.userName,
-      phoneNumber: state.phoneNumber,
-      zipCode: state.zipCode,
-    };
-    // TODO error handling
-    const response = await fetch("/api/user", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(userObject),
-    });
-    return await response.json();
+    // check input value for zipcode with regex pattern
+    if (/^\d{5}$/.test(state.zipCode) === false) {
+      alert("Please enter valid 5 digit zipcode.");
+    }
+    try {
+      const zoneResponse = await fetch(
+        `https://phzmapi.org/${state.zipCode}.json`,
+      );
+      const zoneObj = await zoneResponse.json();
+      setState({
+        userName: state.userName,
+        phoneNumber: state.phoneNumber,
+        zipCode: state.zipCode,
+        zone: zoneObj.zone,
+      });
+      const token = await getAccessTokenSilently();
+      let userObject = {
+        email: user.email,
+        userName: state.userName,
+        phoneNumber: state.phoneNumber,
+        zipCode: state.zipCode,
+        zone: zoneObj.zone,
+      };
+      const response = await fetch("/api/user", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userObject),
+      });
+      const responseObj = await response.json();
+      if (!responseObj.success) {
+        alert("Could not update your user profile.");
+      }
+    } catch (err) {
+      alert("Could not find your zipcode's corresponding zone.");
+      console.error(err);
+    }
   };
 
   useEffect(() => {
     async function fetchData() {
       const token = await getAccessTokenSilently();
 
-      // You can await here
       const response = await fetch(`/api/user/${user.email}`, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -55,51 +77,65 @@ export default function UserProfile() {
         userName: u.userName || "",
         phoneNumber: u.phoneNumber || "",
         zipCode: u.zipCode || "",
+        zone: u.zone || "",
       });
     }
     fetchData();
   }, []);
 
-  //TODO: validate Zip
-
   return (
-    <div className="UserProfile">
-      <form>
-        <div className="form-control">
-          <label id="userName">
-            Your Preferred Name
-            <br />
-            <input
-              type="text"
-              name="userName"
-              value={state.userName}
-              onChange={handleInputChange}
-            />
-          </label>
-          <label id="phoneNumber">
-            Phone Number for Text Alerts
-            <br />
-            <input
-              type="tel"
-              name="phoneNumber"
-              value={state.phoneNumber}
-              onChange={handleInputChange}
-            />
-          </label>
-          <label id="zipCode">
-            Zip Code
-            <br />
-            <input
-              type="text"
-              name="zipCode"
-              value={state.zipCode}
-              onChange={handleInputChange}
-            />
-          </label>
-          <br />
-          <button onClick={updateUser}>Update your Zone</button>
+    <>
+      <div className="outer">
+        <div id="userZone">
+          <h3>
+            {!state.zone
+              ? `Enter zipcode to find your zone`
+              : `${
+                  state.userName && state.userName !== ""
+                    ? state.userName
+                    : user.email.slice(0, user.email.indexOf("@"))
+                }'s Zone: ${state.zone}`}
+          </h3>
         </div>
-      </form>
-    </div>
+      </div>
+      <div className="UserProfile">
+        <form>
+          <div className="form-control">
+            <label id="userName">
+              Your Preferred Name
+              <br />
+              <input
+                type="text"
+                name="userName"
+                value={state.userName}
+                onChange={handleInputChange}
+              />
+            </label>
+            <label id="phoneNumber">
+              Phone Number for Text Alerts
+              <br />
+              <input
+                type="tel"
+                name="phoneNumber"
+                value={state.phoneNumber}
+                onChange={handleInputChange}
+              />
+            </label>
+            <label id="zipCode">
+              Zip Code
+              <br />
+              <input
+                type="number"
+                name="zipCode"
+                value={state.zipCode}
+                onChange={handleInputChange}
+              />
+            </label>
+            <br />
+            <button onClick={updateUser}>Update your Zone</button>
+          </div>
+        </form>
+      </div>
+    </>
   );
 }

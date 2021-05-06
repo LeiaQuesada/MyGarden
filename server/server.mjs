@@ -35,27 +35,36 @@ const user = express.Router();
 user.use(express.json());
 
 user.get("/:email", async (request, response) => {
-  let dbUser = await db.getUser(request.params.email);
+  try {
+    let dbUser = await db.getUser(request.params.email);
 
-  if (!dbUser) {
-    //user does not exist, so create user with just the email
-    dbUser = db.createUser(request.params.email);
+    if (!dbUser) {
+      //user does not exist, so create user with just the email
+      dbUser = db.createUser(request.params.email);
+    }
+    const responseUser = {
+      userName: dbUser.username,
+      phoneNumber: dbUser.phone,
+      zipCode: dbUser.zipcode,
+      zone: dbUser.zone,
+    };
+    response.status(200).json(responseUser);
+  } catch (err) {
+    console.error(err);
   }
-  const responseUser = {
-    userName: dbUser.username,
-    phoneNumber: dbUser.phone,
-    zipCode: dbUser.zipcode,
-  };
-  response.status(200).json(responseUser);
 });
 
 user.post("/", async (request, response) => {
-  const userIn = request.body;
-  const isUserUpdated = await db.updateUser(userIn);
-  if (isUserUpdated) {
-    response.status(200).json({ success: true });
-  } else {
-    response.status(200).json({ success: false });
+  try {
+    const userIn = request.body;
+    const isUserUpdated = await db.updateUser(userIn);
+    if (isUserUpdated) {
+      response.status(200).json({ success: true });
+    } else {
+      response.status(200).json({ success: false });
+    }
+  } catch (err) {
+    console.error(err);
   }
 });
 
@@ -71,6 +80,7 @@ process.env?.SERVE_REACT?.toLowerCase() === "true" &&
     }),
   );
 
+// TODO deleting this breaks app, look into later
 app.get("/api/ping", (request, response) =>
   response.json({ response: "pong" }),
 );

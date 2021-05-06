@@ -3,7 +3,7 @@ name: Deploy to Heroku
 on:
   push:
     branches:
-      - main
+      - "**" # Matches all branch and tag names.
   workflow_dispatch:
 
 jobs:
@@ -20,4 +20,4 @@ jobs:
           HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
         run: >-
           git push -f https://heroku:${HEROKU_API_TOKEN}@git.heroku.com/${HEROKU_APP_NAME}.git
-          origin/main:main
+          ${GITHUB_REF##*/}:main

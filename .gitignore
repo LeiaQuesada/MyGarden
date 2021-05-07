@@ -11,6 +11,7 @@ crash.log
 
 .DS_Store
 
+.vscode/
 .data/
 .env
 .envrc

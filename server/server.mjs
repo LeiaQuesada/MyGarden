@@ -45,7 +45,7 @@ user.post("/", async (request, response) => {
 
 app.use("/api/user", checkJwt, user);
 
-app.get("/plants/:zone", async (request, response) => {
+app.get("/api/plants/:zone", async (request, response) => {
   let plants = await db.getPlants(request.params.zone);
   response.status(200).json(plants);
 });

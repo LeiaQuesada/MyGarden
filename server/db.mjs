@@ -7,7 +7,6 @@ export const getUser = async (email) =>
   (await db.any("SELECT * FROM users WHERE email = $1;", [email]))[0];
 
 export const updateUser = async (user) => {
-  console.log({ user });
   try {
     await db.none(
       "UPDATE users SET username = ${username}, phone = ${phone}, zipcode = ${zipcode}, email =${email}, zone = ${zone} WHERE email=${email};",

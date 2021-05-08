@@ -28,7 +28,6 @@ export default function UserProfile() {
         },
       });
       const user = await response.json();
-      console.log(user);
       setState(user);
     }
     fetchData();

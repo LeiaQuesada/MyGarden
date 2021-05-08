@@ -29,7 +29,7 @@ export const createUser = async (email) => {
 
 export const getPlants = async (zone) =>
   await db.any(
-    "SELECT * FROM pfaf WHERE CAST (split_part(zone, '-', 1) AS INTEGER) < $1 AND CAST(split_part(zone, '-', 2) AS INTEGER) > $1;",
+    "SELECT * FROM pfaf WHERE CAST (split_part(zone, '-', 1) AS INTEGER) < $1 AND CAST(split_part(zone, '-', 2) AS INTEGER) > $1 ORDER BY edibility DESC LIMIT 32;",
     [zone],
   );
 

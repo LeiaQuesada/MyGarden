@@ -4,54 +4,62 @@ import "../styles.css";
 import { useAuth0 } from "@auth0/auth0-react";
 
 export default function UserProfile() {
-  const { user, getAccessTokenSilently } = useAuth0();
+  const {
+    user: { email },
+    getAccessTokenSilently,
+  } = useAuth0();
 
   const [state, setState] = useState({
-    userName: "",
-    phoneNumber: "",
-    zipCode: "",
+    username: "",
+    phone: "",
+    zipcode: "",
     zone: "",
   });
 
-  const handleInputChange = (event) => {
-    setState((prevProps) => ({
-      ...prevProps,
-      [event.target.name]: event.target.value,
-    }));
+  const { username, phone, zipcode, zone } = state;
+
+  useEffect(() => {
+    async function fetchData() {
+      const token = await getAccessTokenSilently();
+
+      const response = await fetch(`/api/user/${email}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const user = await response.json();
+      setState(user);
+    }
+    fetchData();
+  }, [email, getAccessTokenSilently]);
+
+  const handleInputChange = ({ currentTarget: { name, value } }) => {
+    setState((prevProps) => ({ ...prevProps, [name]: value }));
   };
 
   const updateUser = async (event) => {
     event.preventDefault();
     // check input value for zipcode with regex pattern
-    if (/^\d{5}$/.test(state.zipCode) === false) {
+    if (/^\d{5}$/.test(zipcode) === false) {
       alert("Please enter valid 5 digit zipcode.");
+      return false;
     }
     try {
-      const zoneResponse = await fetch(
-        `https://phzmapi.org/${state.zipCode}.json`,
-      );
+      const zoneResponse = await fetch(`https://phzmapi.org/${zipcode}.json`);
       const zoneObj = await zoneResponse.json();
-      setState({
-        userName: state.userName,
-        phoneNumber: state.phoneNumber,
-        zipCode: state.zipCode,
-        zone: zoneObj.zone,
-      });
-      const token = await getAccessTokenSilently();
-      let userObject = {
-        email: user.email,
-        userName: state.userName,
-        phoneNumber: state.phoneNumber,
-        zipCode: state.zipCode,
+      const newUser = {
+        ...state,
         zone: zoneObj.zone,
       };
+      setState(newUser);
+      const token = await getAccessTokenSilently();
       const response = await fetch("/api/user", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(userObject),
+        body: JSON.stringify({ ...newUser, email }),
       });
       const responseObj = await response.json();
       if (!responseObj.success) {
@@ -63,76 +71,56 @@ export default function UserProfile() {
     }
   };
 
-  useEffect(() => {
-    async function fetchData() {
-      const token = await getAccessTokenSilently();
-
-      const response = await fetch(`/api/user/${user.email}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const u = await response.json();
-      setState({
-        userName: u.userName || "",
-        phoneNumber: u.phoneNumber || "",
-        zipCode: u.zipCode || "",
-        zone: u.zone || "",
-      });
-    }
-    fetchData();
-  }, []);
-
   return (
     <>
       <div className="outer">
         <div id="userZone">
           <h3>
-            {!state.zone
+            {!zone
               ? `Enter zipcode to find your zone`
               : `${
-                  state.userName && state.userName !== ""
-                    ? state.userName
-                    : user.email.slice(0, user.email.indexOf("@"))
-                }'s Zone: ${state.zone}`}
+                  username && username !== ""
+                    ? username
+                    : email.slice(0, email.indexOf("@"))
+                }'s Zone: ${zone}`}
           </h3>
         </div>
       </div>
       <div className="UserProfile">
-        <form>
+        <form onSubmit={updateUser}>
           <div className="form-control">
-            <label id="userName">
+            <label>
               Your Preferred Name
               <br />
               <input
                 type="text"
-                name="userName"
-                value={state.userName}
+                name="username"
+                value={username}
                 onChange={handleInputChange}
               />
             </label>
-            <label id="phoneNumber">
+            <label>
               Phone Number for Text Alerts
               <br />
               <input
                 type="tel"
-                name="phoneNumber"
-                value={state.phoneNumber}
+                name="phone"
+                value={phone}
                 onChange={handleInputChange}
               />
             </label>
-            <label id="zipCode">
+            <label>
               Zip Code
               <br />
               <input
                 type="number"
-                name="zipCode"
-                value={state.zipCode}
+                name="zipcode"
+                value={zipcode}
                 onChange={handleInputChange}
               />
             </label>
             <br />
-            <button onClick={updateUser}>Update your Zone</button>
+            <button type="submit">Update your Zone</button>
           </div>
         </form>
       </div>

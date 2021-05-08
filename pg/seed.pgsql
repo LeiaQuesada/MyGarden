@@ -25,12 +25,12 @@ SET default_table_access_method = heap;
 --
 
 CREATE TABLE public.users (
-    user_id SERIAL PRIMARY KEY,
-    phone TEXT,
-    email TEXT,
-    zipcode INTEGER,
-    username TEXT,
-    zone TEXT
+    id SERIAL PRIMARY KEY,
+    phone TEXT DEFAULT '',
+    email TEXT UNIQUE,
+    zipcode INTEGER DEFAULT 0,
+    username TEXT DEFAULT '',
+    zone TEXT DEFAULT ''
 );
 
 CREATE TABLE public.trefle (

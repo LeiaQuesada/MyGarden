@@ -7,26 +7,18 @@ import * as db from "./db.mjs";
 
 const app = express();
 const port = process.env.PORT || 4000;
-// TODO: CONSIDER checking scopes
-// import jwtAuthz from "express-jwt-authz";
 
-// Authorization middleware. When used, the
-// Access Token must exist and be verified against
-// the Auth0 JSON Web Key Set
+const authDomain = "https://dev-wbfyt2d4.us.auth0.com";
+
 const checkJwt = jwt({
-  // Dynamically provide a signing key
-  // based on the kid in the header and
-  // the signing keys provided by the JWKS endpoint.
   secret: jwksRsa.expressJwtSecret({
     cache: true,
     rateLimit: true,
     jwksRequestsPerMinute: 5,
-    jwksUri: `https://dev-wbfyt2d4.us.auth0.com/.well-known/jwks.json`,
+    jwksUri: `${authDomain}/.well-known/jwks.json`,
   }),
-
-  // Validate the audience and the issuer.
-  audience: "https://dev-wbfyt2d4.us.auth0.com/api/v2/",
-  issuer: [`https://dev-wbfyt2d4.us.auth0.com/`],
+  audience: `${authDomain}/api/v2/`,
+  issuer: [`${authDomain}/`],
   algorithms: ["RS256"],
 });
 
@@ -35,36 +27,19 @@ const user = express.Router();
 user.use(express.json());
 
 user.get("/:email", async (request, response) => {
-  try {
-    let dbUser = await db.getUser(request.params.email);
-
-    if (!dbUser) {
-      //user does not exist, so create user with just the email
-      dbUser = db.createUser(request.params.email);
-    }
-    const responseUser = {
-      userName: dbUser.username,
-      phoneNumber: dbUser.phone,
-      zipCode: dbUser.zipcode,
-      zone: dbUser.zone,
-    };
-    response.status(200).json(responseUser);
-  } catch (err) {
-    console.error(err);
+  let dbUser = await db.getUser(request.params.email);
+  if (dbUser === undefined) {
+    dbUser = db.createUser(request.params.email);
   }
+  response.status(200).json(dbUser);
 });
 
 user.post("/", async (request, response) => {
-  try {
-    const userIn = request.body;
-    const isUserUpdated = await db.updateUser(userIn);
-    if (isUserUpdated) {
-      response.status(200).json({ success: true });
-    } else {
-      response.status(200).json({ success: false });
-    }
-  } catch (err) {
-    console.error(err);
+  const isUserUpdated = await db.updateUser(request.body);
+  if (isUserUpdated) {
+    response.status(200).json({ success: true });
+  } else {
+    response.status(500).json({ success: false });
   }
 });
 
@@ -80,7 +55,6 @@ process.env?.SERVE_REACT?.toLowerCase() === "true" &&
     }),
   );
 
-// TODO deleting this breaks app, look into later
 app.get("/api/ping", (request, response) =>
   response.json({ response: "pong" }),
 );

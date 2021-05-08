@@ -6,11 +6,11 @@ const db = initDb();
 export const getUser = async (email) =>
   (await db.any("SELECT * FROM users WHERE email = $1;", [email]))[0];
 
-export const updateUser = async (u) => {
+export const updateUser = async (user) => {
   try {
     await db.none(
-      "UPDATE users SET username = $1, phone = $2, zipcode = $3, zone = $4 WHERE email=$5;",
-      [u.userName, u.phoneNumber, u.zipCode, u.zone, u.email],
+      "UPDATE users SET username = ${username}, phone = ${phone}, zipcode = ${zipcode}, email =${email}, zone = ${zone} WHERE email=${email};",
+      user,
     );
     return true;
   } catch (err) {

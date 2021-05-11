@@ -10,22 +10,26 @@ export default function PlantRecommendations(props) {
 
   let zone = parseInt(props.zone);
   const { getAccessTokenSilently } = useAuth0();
-  const getPlants = async (e) => {
+  const getPlants = async () => {
     const token = await getAccessTokenSilently();
     setPlants(await apiClient.getPlants(token, zone));
   };
 
   return (
     <>
-      <h2>Plants Recommendations</h2>
-      {plants.slice(0, 4).map((plant) => {
-        return (
-          <>
-            <h4>{plant.common_name}</h4>
-            <br />
-          </>
-        );
-      })}
+      <h2>Plant Recommendations</h2>
+      <ul>
+        {plants.slice(0, 4).map((plant) => {
+          return (
+            <li key={plant.id}>
+              <img src={plant.image_url} alt={plant.common_name} width="100" />
+              <a href={plant.url_wikipedia_en} target="_blank" rel="noreferrer">
+                {plant.common_name}
+              </a>
+            </li>
+          );
+        })}
+      </ul>
       <button onClick={getPlants}>Get Recommended Zone Plants</button>
     </>
   );

@@ -5,7 +5,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useHistory } from "react-router-dom";
 
 export default function UserProfile() {
-  const { logout, user, getAccessTokenSilently } = useAuth0();
+  const { user, getAccessTokenSilently } = useAuth0();
 
   const [state, setState] = useState({
     username: "",
@@ -139,10 +139,6 @@ export default function UserProfile() {
           </div>
         </form>
       </div>
-      <img id="userpic" src={user.picture} alt={user.name} />
-      <button onClick={() => logout({ returnTo: window.location.origin })}>
-        Log Out
-      </button>
     </>
   );
 }

@@ -2,11 +2,12 @@ body {
   background-color: #f6eee5;
 }
 
-h1 {
+h1,
+h2,
+h3 {
   color: #30485f;
   font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Oxygen", "Ubuntu",
     "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-  /* padding: 1rem; */
 }
 
 .header {
@@ -20,12 +21,6 @@ h1 {
   left: 0;
   right: 0;
 }
-
-/* h1 {
-  float: left;
-  padding: 1rem;
-  text-align: left;
-} */
 
 #userpic {
   width: 75px;
@@ -70,6 +65,22 @@ button {
   display: inline-block;
   font-size: 1rem;
   width: 100%;
+  color: #30485f;
+  font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Oxygen", "Ubuntu",
+    "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+}
+
+.options {
+  flex-wrap: wrap;
+  display: flex;
+}
+
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
 }
 
 footer {

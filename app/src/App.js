@@ -1,19 +1,14 @@
 import React from "react";
 
 import { useAuth0 } from "@auth0/auth0-react";
-import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 import "./styles.css";
+import PlantRecommendations from "./components/PlantRecommendations";
 import UserProfile from "./components/UserProfile";
 
 export default function App() {
-  const {
-    loginWithRedirect,
-    logout,
-    user,
-    isAuthenticated,
-    isLoading,
-  } = useAuth0();
+  const { loginWithRedirect, isAuthenticated, isLoading } = useAuth0();
 
   return (
     <>
@@ -28,33 +23,21 @@ export default function App() {
             <Router>
               <main>
                 <nav>
-                  <ul>
-                    <li>
-                      <a href="/">Home</a>
-                    </li>
-                    <li>
-                      <a href="/UserProfile">{user.name}'s Profile</a>
-                    </li>
-                    <li>
-                      <a href="/garden">Garden</a>
-                    </li>
-                  </ul>
+                  <Link to="/profile">Profile</Link>
                 </nav>
-                <Route path="/" render={() => <h1>Welcome!</h1>} />
               </main>
+              <Switch>
+                <Route exact path="/">
+                  <UserProfile />
+                </Route>
+                <Route exact path="/profile">
+                  <UserProfile />
+                </Route>
+                <Route path="/recommendations">
+                  <PlantRecommendations />
+                </Route>
+              </Switch>
             </Router>
-            <div id="user-info">
-              <div id="left">
-                <img id="userpic" src={user.picture} alt={user.name} />
-              </div>
-              <div id="right">
-                <button
-                  onClick={() => logout({ returnTo: window.location.origin })}
-                >
-                  Log Out
-                </button>
-              </div>
-            </div>
           </>
         ) : null}
       </div>
@@ -74,11 +57,9 @@ export default function App() {
             </p>
             <button onClick={loginWithRedirect}>Sign up / Log In</button>
           </div>
-        ) : (
-          <UserProfile />
-        )}
+        ) : null}
       </>
-      <footer>Disclaimers © 2021</footer>
+      <footer>Disclaimer © 2021</footer>
     </>
   );
 }

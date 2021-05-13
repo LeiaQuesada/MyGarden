@@ -18,9 +18,6 @@ ReactDOM.render(
       >
         <App />
       </Auth0Provider>
-
-      <p>This is for styling purposes only </p>
-      <p>Need to revisit display options, insert test content component here</p>
     </>
   </React.StrictMode>,
   document.getElementById("root"),

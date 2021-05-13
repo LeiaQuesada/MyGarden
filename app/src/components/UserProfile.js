@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../styles.css";
 
 import { useAuth0 } from "@auth0/auth0-react";
+import { Redirect } from "react-router-dom";
 
 import PlantRecommendations from "./PlantRecommendations";
 
@@ -75,6 +76,7 @@ export default function UserProfile() {
 
   return (
     <>
+      {zone === undefined ? <Redirect to="/" /> : null}
       <div className="outer">
         <div id="userZone">
           <h3>
@@ -125,7 +127,6 @@ export default function UserProfile() {
             <button type="submit">Update your Zone</button>
           </div>
         </form>
-        <PlantRecommendations zone={zone} />
       </div>
     </>
   );

@@ -3,6 +3,8 @@ import "../styles.css";
 
 import { useAuth0 } from "@auth0/auth0-react";
 
+import PlantRecommendations from "./PlantRecommendations";
+
 export default function UserProfile() {
   const {
     user: { email },
@@ -123,6 +125,7 @@ export default function UserProfile() {
             <button type="submit">Update your Zone</button>
           </div>
         </form>
+        <PlantRecommendations zone={zone} />
       </div>
     </>
   );

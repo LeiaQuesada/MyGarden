@@ -45,6 +45,11 @@ user.post("/", async (request, response) => {
 
 app.use("/api/user", checkJwt, user);
 
+app.get("/api/plants/:zone", async (request, response) => {
+  let plants = await db.getPlants(request.params.zone);
+  response.status(200).json(plants);
+});
+
 process.env?.SERVE_REACT?.toLowerCase() === "true" &&
   app.use(
     express.static("/app", {

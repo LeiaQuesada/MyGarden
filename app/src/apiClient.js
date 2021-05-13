@@ -28,3 +28,12 @@ export const addTask = async (name) => {
 //    });
 //    return await response.json();
 // };
+
+export const getPlants = async (token, zone) => {
+  const response = await fetch(`/api/plants/${zone}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return await response.json();
+};

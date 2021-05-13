@@ -34,7 +34,6 @@
   "homepage": "https://github.com/leiaquesada/mygarden#readme",
   "dependencies": {
     "npm-run-all": "^4.1.5",
-    "react-router-dom": "^5.2.0",
     "rimraf": "^3.0.2"
   }
 }

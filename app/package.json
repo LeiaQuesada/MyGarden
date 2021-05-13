@@ -29,18 +29,19 @@
   },
   "proxy": "http://localhost:4000",
   "dependencies": {
-    "@auth0/auth0-react": "^1.4.0",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
+    "@auth0/auth0-react": "^1.5.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
-    "web-vitals": "^1.0.1"
+    "web-vitals": "^1.1.2"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.1.0",
-    "@testing-library/user-event": "^13.0.2",
-    "eslint-config-prettier": "^8.2.0",
+    "@testing-library/jest-dom": "^5.12.0",
+    "@testing-library/react": "^11.2.6",
+    "@testing-library/user-event": "^13.1.9",
+    "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.4.0",
-    "prettier": "^2.2.1"
+    "prettier": "^2.3.0"
   }
 }

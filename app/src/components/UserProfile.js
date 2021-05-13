@@ -2,15 +2,10 @@ import React, { useEffect, useState } from "react";
 import "../styles.css";
 
 import { useAuth0 } from "@auth0/auth0-react";
-import { Redirect } from "react-router-dom";
-
-import PlantRecommendations from "./PlantRecommendations";
+import { useHistory } from "react-router-dom";
 
 export default function UserProfile() {
-  const {
-    user: { email },
-    getAccessTokenSilently,
-  } = useAuth0();
+  const { logout, user, getAccessTokenSilently } = useAuth0();
 
   const [state, setState] = useState({
     username: "",
@@ -19,22 +14,31 @@ export default function UserProfile() {
     zone: "",
   });
 
+  const history = useHistory();
+
+  function showRecommendations() {
+    history.push({
+      pathname: "/recommendations",
+      state: { zone },
+    });
+  }
+
   const { username, phone, zipcode, zone } = state;
 
   useEffect(() => {
     async function fetchData() {
       const token = await getAccessTokenSilently();
 
-      const response = await fetch(`/api/user/${email}`, {
+      const response = await fetch(`/api/user/${user.email}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      const user = await response.json();
-      setState(user);
+      const userObj = await response.json();
+      setState(userObj);
     }
     fetchData();
-  }, [email, getAccessTokenSilently]);
+  }, [user, getAccessTokenSilently]);
 
   const handleInputChange = ({ currentTarget: { name, value } }) => {
     setState((prevProps) => ({ ...prevProps, [name]: value }));
@@ -42,7 +46,6 @@ export default function UserProfile() {
 
   const updateUser = async (event) => {
     event.preventDefault();
-    // check input value for zipcode with regex pattern
     if (/^\d{5}$/.test(zipcode) === false) {
       alert("Please enter valid 5 digit zipcode.");
       return false;
@@ -56,6 +59,7 @@ export default function UserProfile() {
       };
       setState(newUser);
       const token = await getAccessTokenSilently();
+      const email = user.email;
       const response = await fetch("/api/user", {
         method: "POST",
         headers: {
@@ -65,9 +69,9 @@ export default function UserProfile() {
         body: JSON.stringify({ ...newUser, email }),
       });
       const responseObj = await response.json();
-      if (!responseObj.success) {
-        alert("Could not update your user profile.");
-      }
+      !responseObj.success
+        ? alert("Could not update your user profile.")
+        : alert("Information updated!");
     } catch (err) {
       alert("Could not find your zipcode's corresponding zone.");
       console.error(err);
@@ -76,7 +80,6 @@ export default function UserProfile() {
 
   return (
     <>
-      {zone === undefined ? <Redirect to="/" /> : null}
       <div className="outer">
         <div id="userZone">
           <h3>
@@ -85,7 +88,7 @@ export default function UserProfile() {
               : `${
                   username && username !== ""
                     ? username
-                    : email.slice(0, email.indexOf("@"))
+                    : user.email.slice(0, user.email.indexOf("@"))
                 }'s Zone: ${zone}`}
           </h3>
         </div>
@@ -119,15 +122,27 @@ export default function UserProfile() {
               <input
                 type="number"
                 name="zipcode"
+                maxLength="5"
                 value={zipcode}
                 onChange={handleInputChange}
               />
             </label>
             <br />
-            <button type="submit">Update your Zone</button>
+            <div id="options">
+              <button id="upper" type="submit">
+                Update
+              </button>
+              <button onClick={showRecommendations}>
+                Show Recommendations
+              </button>
+            </div>
           </div>
         </form>
       </div>
+      <img id="userpic" src={user.picture} alt={user.name} />
+      <button onClick={() => logout({ returnTo: window.location.origin })}>
+        Log Out
+      </button>
     </>
   );
 }

@@ -4,6 +4,7 @@ import "../styles.css";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useHistory } from "react-router-dom";
 
+import * as apiClient from "../apiClient";
 export default function UserProfile() {
   const { user, getAccessTokenSilently } = useAuth0();
 
@@ -28,13 +29,7 @@ export default function UserProfile() {
   useEffect(() => {
     async function fetchData() {
       const token = await getAccessTokenSilently();
-
-      const response = await fetch(`/api/user/${user.email}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const userObj = await response.json();
+      const userObj = await apiClient.getUser(token, user.email);
       setState(userObj);
     }
     fetchData();
@@ -60,13 +55,14 @@ export default function UserProfile() {
       setState(newUser);
       const token = await getAccessTokenSilently();
       const email = user.email;
+      const userUpdateObj = { ...newUser, email: email, showprofile: false };
       const response = await fetch("/api/user", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ ...newUser, email }),
+        body: JSON.stringify(userUpdateObj),
       });
       const responseObj = await response.json();
       !responseObj.success

@@ -6,8 +6,8 @@ import { createBrowserHistory } from "history";
 import { Router, Route, Switch } from "react-router-dom";
 
 import Header from "./components/Header";
+import Home from "./components/Home";
 import PlantRecommendations from "./components/PlantRecommendations";
-import SignIn from "./components/SignIn";
 import UserProfile from "./components/UserProfile";
 export const history = createBrowserHistory();
 
@@ -28,7 +28,7 @@ export default function App() {
       {error && <div>{error.message}</div>}
       <Router history={history}>
         <Switch>
-          <Route path="/" exact component={SignIn} />
+          <Route path="/" exact component={Home} />
           <ProtectedRoute path="/profile" component={UserProfile} />
           <ProtectedRoute
             path="/recommendations"

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import "../styles.css";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -7,15 +7,18 @@ import { useHistory } from "react-router-dom";
 import * as apiClient from "../apiClient";
 
 export default function PlantRecommendations() {
-  let [plants, setPlants] = useState([]);
+  const [plants, setPlants] = useState([]);
 
-  const history = useHistory();
-  let zone = parseInt(history.location.state.zone);
-  const { getAccessTokenSilently } = useAuth0();
-  const getPlants = async () => {
-    const token = await getAccessTokenSilently();
-    setPlants(await apiClient.getPlants(token, zone));
-  };
+  const { user, getAccessTokenSilently } = useAuth0();
+
+  useEffect(() => {
+    async function fetchData() {
+      const token = await getAccessTokenSilently();
+      const userObj = await apiClient.getUser(token, user.email);
+      setPlants(await apiClient.getPlants(token, parseInt(userObj.zone)));
+    }
+    fetchData();
+  }, [user, getAccessTokenSilently]);
 
   return (
     <>
@@ -32,7 +35,6 @@ export default function PlantRecommendations() {
           );
         })}
       </ul>
-      <button onClick={getPlants}>Get Recommended Zone Plants</button>
     </>
   );
 }

@@ -1,9 +1,11 @@
 import React, { useEffect } from "react";
 
 import { useAuth0 } from "@auth0/auth0-react";
+import { Link } from "react-router-dom";
 
 import { history } from "../App";
 import * as apiClient from "../apiClient";
+
 import "../styles.css";
 
 export default function Home() {
@@ -18,7 +20,7 @@ export default function Home() {
   useEffect(() => {
     async function showProfile() {
       const token = await getAccessTokenSilently();
-      const userObj = await apiClient.getUser(token, user.email);
+      const userObj = await apiClient.getUser(token, user.email, user.zone);
       if (userObj.showprofile) {
         history.push({
           pathname: "/profile",
@@ -51,7 +53,10 @@ export default function Home() {
           <button onClick={loginWithRedirect}>Sign up / Log In</button>
         </div>
       ) : (
-        <h3>Plot Details </h3>
+        <>
+          <h3>Plot Details </h3>
+          <Link to="/recommendations">Get Recommended Zone Plants</Link>
+        </>
       )}
     </>
   );

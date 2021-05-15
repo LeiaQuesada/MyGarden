@@ -9,7 +9,7 @@ export const getUser = async (email) =>
 export const updateUser = async (user) => {
   try {
     await db.none(
-      "UPDATE users SET username = ${username}, phone = ${phone}, zipcode = ${zipcode}, email =${email}, zone = ${zone}, showprofile = ${showprofile} WHERE email=${email};",
+      "UPDATE users SET username = ${username}, phone = ${phone}, zipcode = ${zipcode}, email = ${email}, zone = ${zone}, showprofile = ${showprofile} WHERE email = ${email};",
       user,
     );
     return true;
@@ -32,6 +32,13 @@ export const getPlants = async (zone) =>
     "SELECT * FROM plants WHERE edibility > 3 AND CAST (split_part(zone, '-', 1) AS INTEGER) < $1 AND CAST(split_part(zone, '-', 2) AS INTEGER) > $1 ORDER BY edibility DESC, width LIMIT 32;",
     [zone],
   );
+
+export const addPlant = async (container) => {
+  await db.any("INSERT INTO containers (user_id, plant_id) VALUES ($1, $2);", [
+    container.userid,
+    container.plantid,
+  ])[0];
+};
 
 function initDb() {
   let connection;

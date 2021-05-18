@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import "../styles.css";
 import { useAuth0 } from "@auth0/auth0-react";
+import { Button, Card } from "@material-ui/core";
 
 import * as apiClient from "../apiClient";
 
@@ -33,24 +34,27 @@ export default function PlantRecommendations() {
   return (
     <>
       <h2>Plant Recommendations</h2>
-      <ul className="plantcards">
+      <section className="plantcards">
         {plants.slice(0, 4).map((plant) => {
           return (
-            <li className="plantcard" key={plant.id}>
-              <img src={plant.image_url} alt={plant.common_name} width="100" />
+            <Card className="plantcard" key={plant.id}>
+              <img src={plant.image_url} alt={plant.common_name} width="100%" />
+              <br />
               <a href={plant.url_wikipedia_en} target="_blank" rel="noreferrer">
                 {plant.common_name}
               </a>
-              <button
+              <Button
+                variant="contained"
+                color="primary"
                 id="plantcardbutton"
                 onClick={() => handleAddPlant(plant.id)}
               >
-                Add
-              </button>
-            </li>
+                Add to Garden
+              </Button>
+            </Card>
           );
         })}
-      </ul>
+      </section>
     </>
   );
 }

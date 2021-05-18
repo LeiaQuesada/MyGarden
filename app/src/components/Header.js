@@ -8,13 +8,10 @@ export default function Header() {
   const { logout, user, isAuthenticated } = useAuth0();
 
   return (
-    <div className="header">
+    <nav className="header">
       <h1>MyGarden</h1>
       {isAuthenticated ? (
         <>
-          <main>
-            <nav></nav>
-          </main>
           <div id="user-info">
             <div id="left">
               <img id="userpic" src={user.picture} alt={user.name} />
@@ -29,6 +26,6 @@ export default function Header() {
           </div>
         </>
       ) : null}
-    </div>
+    </nav>
   );
 }

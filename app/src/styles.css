@@ -22,13 +22,25 @@ h3 {
   right: 0;
 }
 
-#userpic {
-  width: 75px;
-  margin: 0 0 0.2rem 0;
-}
-
 #user-info {
   float: right;
+}
+
+#userpic {
+  width: 4rem;
+  margin: 0 0 0.2rem 0;
+  border-radius: 4px;
+}
+
+button {
+  border-radius: 4px;
+  padding: 0.5rem 0.5rem;
+  display: inline-block;
+  font-size: 1rem;
+  width: 100%;
+  color: #30485f;
+  font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Oxygen", "Ubuntu",
+    "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
 }
 
 form {
@@ -59,17 +71,6 @@ form {
   width: calc(100% - 10px);
 }
 
-button {
-  border-radius: 4px;
-  padding: 15px 32px;
-  display: inline-block;
-  font-size: 1rem;
-  width: 100%;
-  color: #30485f;
-  font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Oxygen", "Ubuntu",
-    "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-}
-
 .options {
   flex-wrap: wrap;
   display: flex;
@@ -81,6 +82,19 @@ button {
 
 .right {
   float: right;
+}
+
+.plantcards {
+  display: flex;
+  align-items: stretch;
+  align-content: space-evenly;
+  font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Oxygen", "Ubuntu",
+    "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+}
+
+.plantcard {
+  flex-wrap: wrap;
+  margin: 0.4rem;
 }
 
 footer {

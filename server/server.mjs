@@ -45,10 +45,20 @@ user.post("/", async (request, response) => {
 
 app.use("/api/user", checkJwt, user);
 
-app.get("/api/plants/:zone", async (request, response) => {
-  let plants = await db.getPlants(request.params.zone);
+const plant = express.Router();
+plant.use(express.json());
+
+plant.get("/:zone", async (request, response) => {
+  const plants = await db.getPlants(request.params.zone);
   response.status(200).json(plants);
 });
+
+plant.post("/", async (request, response) => {
+  const plant = await db.addPlant(request.body);
+  response.status(200).json(plant);
+});
+
+app.use("/api/plant", checkJwt, plant);
 
 process.env?.SERVE_REACT?.toLowerCase() === "true" &&
   app.use(

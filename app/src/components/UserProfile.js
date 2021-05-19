@@ -2,14 +2,11 @@ import React, { useEffect, useState } from "react";
 import "../styles.css";
 
 import { useAuth0 } from "@auth0/auth0-react";
+import { useHistory } from "react-router-dom";
 
-import PlantRecommendations from "./PlantRecommendations";
-
+import * as apiClient from "../apiClient";
 export default function UserProfile() {
-  const {
-    user: { email },
-    getAccessTokenSilently,
-  } = useAuth0();
+  const { user, getAccessTokenSilently } = useAuth0();
 
   const [state, setState] = useState({
     username: "",
@@ -18,22 +15,25 @@ export default function UserProfile() {
     zone: "",
   });
 
+  const history = useHistory();
+
+  function showRecommendations() {
+    history.push({
+      pathname: "/recommendations",
+      state: { zone },
+    });
+  }
+
   const { username, phone, zipcode, zone } = state;
 
   useEffect(() => {
     async function fetchData() {
       const token = await getAccessTokenSilently();
-
-      const response = await fetch(`/api/user/${email}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const user = await response.json();
-      setState(user);
+      const userObj = await apiClient.getUser(token, user.email);
+      setState(userObj);
     }
     fetchData();
-  }, [email, getAccessTokenSilently]);
+  }, [user, getAccessTokenSilently]);
 
   const handleInputChange = ({ currentTarget: { name, value } }) => {
     setState((prevProps) => ({ ...prevProps, [name]: value }));
@@ -41,7 +41,6 @@ export default function UserProfile() {
 
   const updateUser = async (event) => {
     event.preventDefault();
-    // check input value for zipcode with regex pattern
     if (/^\d{5}$/.test(zipcode) === false) {
       alert("Please enter valid 5 digit zipcode.");
       return false;
@@ -55,18 +54,20 @@ export default function UserProfile() {
       };
       setState(newUser);
       const token = await getAccessTokenSilently();
+      const email = user.email;
+      const userUpdateObj = { ...newUser, email: email, showprofile: false };
       const response = await fetch("/api/user", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ ...newUser, email }),
+        body: JSON.stringify(userUpdateObj),
       });
       const responseObj = await response.json();
-      if (!responseObj.success) {
-        alert("Could not update your user profile.");
-      }
+      !responseObj.success
+        ? alert("Could not update your user profile.")
+        : alert("Information updated!");
     } catch (err) {
       alert("Could not find your zipcode's corresponding zone.");
       console.error(err);
@@ -83,7 +84,7 @@ export default function UserProfile() {
               : `${
                   username && username !== ""
                     ? username
-                    : email.slice(0, email.indexOf("@"))
+                    : user.email.slice(0, user.email.indexOf("@"))
                 }'s Zone: ${zone}`}
           </h3>
         </div>
@@ -117,15 +118,22 @@ export default function UserProfile() {
               <input
                 type="number"
                 name="zipcode"
+                maxLength="5"
                 value={zipcode}
                 onChange={handleInputChange}
               />
             </label>
             <br />
-            <button type="submit">Update your Zone</button>
+            <div id="options">
+              <button id="upper" type="submit">
+                Update
+              </button>
+              <button onClick={showRecommendations}>
+                Show Recommendations
+              </button>
+            </div>
           </div>
         </form>
-        <PlantRecommendations zone={zone} />
       </div>
     </>
   );

@@ -2,26 +2,27 @@ import React from "react";
 import ReactDOM from "react-dom";
 
 import { Auth0Provider } from "@auth0/auth0-react";
+
 import "./styles.css";
 
-import App from "./App";
+import App, { history } from "./App";
 import reportWebVitals from "./reportWebVitals";
+
+const onRedirectCallback = (appState) => {
+  history.replace((appState && appState.returnTo) || window.location.pathname);
+};
 
 ReactDOM.render(
   <React.StrictMode>
-    <>
-      <Auth0Provider
-        domain="dev-wbfyt2d4.us.auth0.com" // from Single Page App
-        clientId="qAVrIAowOt9AM2e1pWSfWDLDgBJfAqX6" // from SPA ^^
-        audience="https://dev-wbfyt2d4.us.auth0.com/api/v2/" // from API
-        redirectUri={window.location.origin}
-      >
-        <App />
-      </Auth0Provider>
-
-      <p>This is for styling purposes only </p>
-      <p>Need to revisit display options, insert test content component here</p>
-    </>
+    <Auth0Provider
+      domain="dev-wbfyt2d4.us.auth0.com" // from Single Page App
+      clientId="qAVrIAowOt9AM2e1pWSfWDLDgBJfAqX6" // from SPA ^^
+      audience="https://dev-wbfyt2d4.us.auth0.com/api/v2/" // from API
+      redirectUri={window.location.origin}
+      onRedirectCallback={onRedirectCallback}
+    >
+      <App />
+    </Auth0Provider>
   </React.StrictMode>,
   document.getElementById("root"),
 );

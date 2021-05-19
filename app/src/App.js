@@ -1,52 +1,42 @@
 import React from "react";
 
-import { useAuth0 } from "@auth0/auth0-react";
-
 import "./styles.css";
-// import reportWebVitals from "./reportWebVitals";
+import { withAuthenticationRequired, useAuth0 } from "@auth0/auth0-react";
+import { createBrowserHistory } from "history";
+import { Router, Route, Switch } from "react-router-dom";
+
+import Header from "./components/Header";
+import Home from "./components/Home";
+import PlantRecommendations from "./components/PlantRecommendations";
 import UserProfile from "./components/UserProfile";
+export const history = createBrowserHistory();
 
-const App = () => {
-  const {
-    loginWithRedirect,
-    logout,
-    user,
-    isAuthenticated,
-    isLoading,
-  } = useAuth0();
+const ProtectedRoute = ({ component, ...args }) => (
+  <Route component={withAuthenticationRequired(component)} {...args} />
+);
 
-  return isLoading ? (
-    <div>Loading ...</div>
-  ) : isAuthenticated ? (
+export default function App() {
+  const { isLoading, error } = useAuth0();
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  return (
     <>
-      <div className="header">
-        <h1>MyGarden</h1>
-        <div id="user-info">
-          <div id="left">
-            <img id="userpic" src={user.picture} alt={user.name} />
-          </div>
-          <div id="right">
-            <button
-              onClick={() => logout({ returnTo: window.location.origin })}
-            >
-              Log Out
-            </button>
-          </div>
-        </div>
-      </div>
-      <UserProfile />
-      <footer>testing</footer>
-    </>
-  ) : (
-    <>
-      <div className="header">
-        <div id="user-info">
-          <button onClick={() => loginWithRedirect()}>Log In</button>
-        </div>
-      </div>
-      <footer>testing</footer>
+      <Header />
+      {error && <div>{error.message}</div>}
+      <Router history={history}>
+        <Switch>
+          <Route path="/" exact component={Home} />
+          <ProtectedRoute path="/profile" component={UserProfile} />
+          <ProtectedRoute
+            path="/recommendations"
+            component={PlantRecommendations}
+          />
+        </Switch>
+      </Router>
+      <footer>Disclaimer © 2021</footer>
     </>
   );
-};
-
-export default App;
+}

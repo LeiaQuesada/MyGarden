@@ -103,42 +103,36 @@ npm run psql
 
 ## Application Programming Interfaces:
 
-1. [Auth0 (authentication)](https://cloud.google.com/endpoints/docs/openapi/authenticating-users-auth0?hl=en&_ga=2.68038099.-376004971.1618853601)
-2. [OpenWeatherMap API](https://openweathermap.org/api/one-call-api)
-3. [Zoning & Vegetation (Trefle)](https://docs.trefle.io/docs/examples/snippets/)
-4. [Plant Hardiness Zones (Walkdoj)](https://github.com/waldoj/frostline)
-5. [Plants For A Future Database](https://pfaf.org/user/Default.aspx)
-6. [Tropical Fruit and Veg](http://tropicalfruitandveg.com/tfvapi.php)
-7. [growstuff.org](https://github.com/Growstuff/growstuff/wiki/API-Version-0)
-   - Alpha quality software as of 2014
+1. [Auth0 (Securing Single Page React App)](https://auth0.com/docs/libraries/auth0-single-page-app-sdk)
+2. [Auth0 (Securing Backend - Authorization)](https://auth0.com/docs/quickstart/backend/nodejs/01-authorization)
+3. [Plant Hardiness Zones (Walkdoj)](https://github.com/waldoj/frostline)
 
-## Minimal Viable Product Priorities:
+## Data Collected From
+
+1. [Vegetation (Trefle)](https://docs.trefle.io/docs/examples/snippets/)
+2. [Plants For A Future Database](https://pfaf.org/user/Default.aspx)
+
+## Minimal Viable Product:
 
 ### [<ins>Google Doc for MyGarden Project development</ins>](https://docs.google.com/document/d/1HtaY2To8yLveDVoQvEU87eZn97pXQrGPm29APZE1Gio/edit?usp=sharing)
 
-### MVP 1:
+### MVP:
 
-- Login with Facebook or Google account
-- Display facts about user’s zone, based on user’s zipcode input
+- Easy secure login with Google account or Sign Up.
+- Based on user’s zipcode input, display user’s zone.
 - Display suggested plants based on user’s zone
+- User can save plant selections
+
+### Future Features:
+
 - If user opts for Indoor growing, display plants that don’t need full sun
-
-### MVP 2:
-
-- User can store plant selections
 - User can group plant selections
 - User can name plant groupings (containers)
-
-### MVP 3:
-
 - Plant companions will be displayed
 - Plant Groupings will display care instructions per group
   - Soil type, watering, light, fertilizer needs
   - Spacing, if necessary
 - Links, with disclaimers, to helpful articles
-
-### Nice-to-Haves:
-
 - Notify user of upcoming significant changes in weather
 - Harsh weather conditions expected //edge cases
   - Watering reminders
@@ -154,15 +148,15 @@ npm run psql
 
 ## Technical Risks:
 
-- PLENTY! First time exploring external API calls
-- Auth0 is said to be difficult to set up, if this takes longer than a day, MVPs may need to be shortened and re-assigned
-- Cross-referencing APIs may prove difficult, if so, steps will be simplified further
-- Figure out appropriate conditionals to display great suggestions for plants and the corresponding care instructions
-- Need to design clean display content with CSS
+- Exploring external API calls.
+- Auth0 is said to be difficult to set up.
+- Cross-referencing APIs for data extraction.
+- Figure out appropriate conditionals to display suggestions for plants.
+- Design clean display content with CSS
 
 ## Database Schema:
 
-![schema](Screenshots/Schema.png)
+![Ultimate database schema](Screenshots/Schema.png)
 
 ## User Flowchart:
 
@@ -171,19 +165,7 @@ npm run psql
 ## Wireframes:
 
 ![home page screen](Screenshots/homescreen.png)
-![login screen](Screenshots/login.png)
 ![Sign up screen](Screenshots/signup.png)
 ![profile info screen](Screenshots/profile.png)
 ![plant recommendations based on user's zone](Screenshots/zone.png)
 ![selected plant information](Screenshots/plantid.png)
-![add plant to user's garden](Screenshots/addplant.png)
-![user's garden summary of plant groupings and recommended articles](Screenshots/gardensummary.png)
-![recommendations for plant companions](Screenshots/compatiblitysuggestions.png)
-![container plant grouping screen](Screenshots/containercontents.png)
-![vegetable recommendations](Screenshots/vegetablerecommendations.png)
-![alternate screen for recommendations/search](Screenshots/alternaterecommendationscreen.png)
-![articles for general instructions](Screenshots/articles.png)
-
-## Supplemental Readings:
-
-- Biointensive Farming Growing Ecosystems of Hope

@@ -43,3 +43,12 @@ export const addPlant = async (token, userid, plantid) => {
   });
   return await response.json();
 };
+
+export const getSavedPlants = async (token, userid) => {
+  const response = await fetch(`/api/user/plants/${userid}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return await response.json();
+};

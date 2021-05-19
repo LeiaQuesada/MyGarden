@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 import { useAuth0 } from "@auth0/auth0-react";
 import { Link } from "react-router-dom";
@@ -7,6 +7,7 @@ import { history } from "../App";
 import * as apiClient from "../apiClient";
 
 import "../styles.css";
+import SavedPlants from "./SavedPlants";
 
 export default function Home() {
   const {
@@ -17,10 +18,14 @@ export default function Home() {
     getAccessTokenSilently,
   } = useAuth0();
 
+  const [userid, setUserid] = useState("");
+  const [token, setToken] = useState("");
   useEffect(() => {
     async function showProfile() {
       const token = await getAccessTokenSilently();
       const userObj = await apiClient.getUser(token, user.email, user.zone);
+      setUserid(userObj.id);
+      setToken(token);
       if (userObj.showprofile) {
         history.push({
           pathname: "/profile",
@@ -56,6 +61,8 @@ export default function Home() {
         <>
           <h3>Plot Details </h3>
           <Link to="/recommendations">Get Recommended Zone Plants</Link>
+          <h4>Your saved Plants:</h4>
+          <SavedPlants userid={userid} token={token} />
         </>
       )}
     </>

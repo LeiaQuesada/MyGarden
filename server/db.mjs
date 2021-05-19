@@ -40,6 +40,12 @@ export const addPlant = async (container) => {
   ])[0];
 };
 
+export const getSavedPlants = async (userid) =>
+  await db.any(
+    "SELECT DISTINCT containers.plant_id, plants.* FROM containers RIGHT JOIN plants ON containers.plant_id = plants.id WHERE containers.user_id = $1;",
+    [userid],
+  );
+
 function initDb() {
   let connection;
 

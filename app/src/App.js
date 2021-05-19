@@ -24,9 +24,9 @@ export default function App() {
 
   return (
     <>
-      <Header />
       {error && <div>{error.message}</div>}
       <Router history={history}>
+        <Header />
         <Switch>
           <ProtectedRoute path="/profile" component={UserProfile} />
           <ProtectedRoute

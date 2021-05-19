@@ -28,12 +28,12 @@ export default function App() {
       {error && <div>{error.message}</div>}
       <Router history={history}>
         <Switch>
-          <Route path="/" exact component={Home} />
           <ProtectedRoute path="/profile" component={UserProfile} />
           <ProtectedRoute
             path="/recommendations"
             component={PlantRecommendations}
           />
+          <Route path="/" exact component={Home} />
         </Switch>
       </Router>
       <footer>Disclaimer © 2021</footer>

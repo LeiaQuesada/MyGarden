@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
+
 import "../styles.css";
+import { Card } from "@material-ui/core";
 
 import * as apiClient from "../apiClient";
 
@@ -7,11 +9,12 @@ const SavedPlants = ({ token, userid }) => {
   const [userPlants, setUserPlants] = useState([]);
   useEffect(() => {
     async function displaySavedPlants() {
-      const userPlants = await apiClient.getSavedPlants(userid, token);
+      const userPlants = await apiClient.getSavedPlants(token, userid);
       setUserPlants(userPlants);
-      console.log(userPlants);
     }
-    displaySavedPlants();
+    if (token && userid) {
+      displaySavedPlants();
+    }
   }, [token, userid]);
 
   return (

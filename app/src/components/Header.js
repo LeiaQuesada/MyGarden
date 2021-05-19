@@ -1,7 +1,7 @@
 import React from "react";
 
 import { useAuth0 } from "@auth0/auth0-react";
-import { Link, useRouteMatch } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import "../styles.css";
 

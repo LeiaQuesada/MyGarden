@@ -1,12 +1,31 @@
 import React, { useState, useEffect } from "react";
 
 import "../styles.css";
-import { Card } from "@material-ui/core";
+import { GridList, GridListTile, GridListTileBar } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 
 import * as apiClient from "../apiClient";
 
+const useStyles = makeStyles((theme) => ({
+  // root: {
+  //   display: "flex",
+  //   flexWrap: "wrap",
+  //   justifyContent: "space-around",
+  //   overflow: "hidden",
+  //   backgroundColor: theme.palette.background.paper,
+  // },
+  gridList: {
+    width: 800,
+    height: 470,
+  },
+  icon: {
+    color: "rgba(255, 255, 255, 0.54)",
+  },
+}));
+
 const SavedPlants = ({ token, userid }) => {
   const [userPlants, setUserPlants] = useState([]);
+  const classes = useStyles();
   useEffect(() => {
     async function displaySavedPlants() {
       const userPlants = await apiClient.getSavedPlants(token, userid);
@@ -17,6 +36,28 @@ const SavedPlants = ({ token, userid }) => {
     }
   }, [token, userid]);
   // PFAF data keys lookups
+  const lookup = (keyObj, keyName) => {
+    let obj = {};
+    switch (keyName) {
+      case "growth_rate":
+        obj = growRateLookup;
+        break;
+      case "soil":
+        obj = soilLookup;
+        break;
+      case "shade":
+        obj = shadeLookup;
+        break;
+      case "moisture":
+        obj = moistureLookup;
+        break;
+      case "ph":
+        obj = pHLookup;
+        break;
+      default:
+    }
+    return obj[keyObj[keyName]] || "";
+  };
   const growRateLookup = {
     S: "Slow growth",
     M: "Medium growth",
@@ -31,75 +72,36 @@ const SavedPlants = ({ token, userid }) => {
     B: "Basic (alkaline) soils.",
   };
   return (
-    <>
-      {userPlants.map(
-        ({
-          id,
-          common_name,
-          image_url,
-          url_wikipedia_en,
-          edible_part,
-          width,
-          height,
-          growth_rate,
-          soil,
-          ph,
-          shade,
-          moisture,
-        }) => {
-          if (!edible_part) edible_part = "";
-          if (!growth_rate) growth_rate = "";
-          if (!soil) soil = "";
-          if (!ph) ph = "";
-          if (!shade) shade = "";
-          if (!moisture) moisture = "";
-          return (
-            <Card className="plantcard" style={{ padding: "1rem" }} key={id}>
-              <img
-                src={image_url}
-                alt={common_name}
-                width="20%"
-                style={{ float: "left" }}
-              />
-              <section style={{ float: "right" }}>
-                <h4>
-                  <a href={url_wikipedia_en} target="_blank" rel="noreferrer">
-                    {common_name}
-                  </a>
-                </h4>
-                <ul>
-                  {edible_part ? <li>Edible part: {edible_part}</li> : ""}
-                  <li>
-                    Growth size: {width} cm (w) x {height} cm (h)
-                  </li>
-                  {growRateLookup[growth_rate] ? (
-                    <li>Growth rate: {growRateLookup[growth_rate]}</li>
-                  ) : (
-                    ""
-                  )}
-                  {soilLookup[soil] ? (
-                    <li>Soil Type: {soilLookup[soil]}</li>
-                  ) : (
-                    ""
-                  )}
-                  {pHLookup[ph] ? <li>pH: {pHLookup[ph]}</li> : ""}
-                  {shadeLookup[shade] ? (
-                    <li>Lighting: {shadeLookup[shade]}</li>
-                  ) : (
-                    ""
-                  )}
-                  {moistureLookup[moisture] ? (
-                    <li>Moisture: {moistureLookup[moisture]}</li>
-                  ) : (
-                    ""
-                  )}
-                </ul>
-              </section>
-            </Card>
-          );
-        },
-      )}
-    </>
+    <GridList cellHeight={300} className={classes.gridList}>
+      {userPlants.map((plant) => {
+        const growth_rate = lookup(plant, "growth_rate"),
+          soil = lookup(plant, "soil"),
+          ph = lookup(plant, "ph"),
+          shade = lookup(plant, "shade"),
+          moisture = lookup(plant, "moisture");
+
+        return (
+          <GridListTile key={plant.id}>
+            <img src={plant.image_url} alt={plant.common_name} />
+            <GridListTileBar
+              title={plant.common_name}
+              subtitle={
+                <span>
+                  {`${plant.edible_part || ""}
+                    ${plant.width}cm (w) x
+                    ${plant.height}cm (h)
+                    ${growth_rate}
+                    ${soil}
+                    ${ph}
+                    ${shade}
+                    ${moisture}`}
+                </span>
+              }
+            />
+          </GridListTile>
+        );
+      })}
+    </GridList>
   );
 };
 

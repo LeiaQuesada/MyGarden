@@ -4,7 +4,8 @@ body {
 
 h1,
 h2,
-h3 {
+h3,
+h4 {
   color: #30485f;
   font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Oxygen", "Ubuntu",
     "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
@@ -86,7 +87,7 @@ form {
 
 .plantcards {
   display: flex;
-  align-items: stretch;
+  align-items: flex-end;
   align-content: space-evenly;
   font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Oxygen", "Ubuntu",
     "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;

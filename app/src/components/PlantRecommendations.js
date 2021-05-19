@@ -10,6 +10,7 @@ export default function PlantRecommendations() {
   const [plants, setPlants] = useState([]);
   const [token, setToken] = useState("");
   const [userid, setUserid] = useState(0);
+  const [plantButtonsDisabled, setPlantButtonsDisabled] = useState([]);
 
   const { user, getAccessTokenSilently } = useAuth0();
 
@@ -29,6 +30,8 @@ export default function PlantRecommendations() {
 
   const handleAddPlant = (plantid) => {
     apiClient.addPlant(token, userid, plantid);
+    // keep track of an array of booleans that is keyed on the value,
+    setPlantButtonsDisabled([...plantButtonsDisabled, plantid]);
   };
 
   return (
@@ -47,6 +50,7 @@ export default function PlantRecommendations() {
                 variant="contained"
                 color="primary"
                 id="plantcardbutton"
+                disabled={plantButtonsDisabled.indexOf(plant.id) >= 0}
                 onClick={() => handleAddPlant(plant.id)}
               >
                 Add to Garden

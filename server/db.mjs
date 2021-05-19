@@ -13,7 +13,7 @@ export const updateUser = async (user) =>
   );
 
 export const createUser = async (email) =>
-  await db.any("INSERT INTO users (email) VALUES ($1);", [email])[0];
+  await db.any("INSERT INTO users (email) VALUES ($1) RETURNING *;", [email]);
 
 export const getPlants = async (zone) =>
   await db.any(

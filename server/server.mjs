@@ -29,7 +29,7 @@ const user = express.Router();
 user.get("/:email", async (request, response) => {
   let dbUser = await db.getUser(request.params.email);
   if (dbUser === undefined) {
-    dbUser = db.createUser(request.params.email);
+    dbUser = await db.createUser(request.params.email);
   }
   response.status(200).json(dbUser);
 });

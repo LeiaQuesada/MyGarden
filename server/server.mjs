@@ -43,6 +43,11 @@ user.post("/", async (request, response) => {
   }
 });
 
+user.get("/plants/:userid", async (request, response) => {
+  const savedPlants = await db.getSavedPlants(request.params.userid);
+  response.status(200).json(savedPlants);
+});
+
 app.use("/api/user", checkJwt, user);
 
 const plant = express.Router();

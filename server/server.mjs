@@ -35,12 +35,8 @@ user.get("/:email", async (request, response) => {
 });
 
 user.post("/", async (request, response) => {
-  const isUserUpdated = await db.updateUser(request.body);
-  if (isUserUpdated) {
-    response.status(200).json({ success: true });
-  } else {
-    response.status(500).json({ success: false });
-  }
+  await db.updateUser(request.body);
+  response.end();
 });
 
 user.get("/plants/:userid", async (request, response) => {

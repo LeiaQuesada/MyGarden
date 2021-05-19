@@ -56,7 +56,7 @@ export default function UserProfile() {
       const token = await getAccessTokenSilently();
       const email = user.email;
       const userUpdateObj = { ...newUser, email: email, showprofile: false };
-      const response = await fetch("/api/user", {
+      await fetch("/api/user", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -64,10 +64,7 @@ export default function UserProfile() {
         },
         body: JSON.stringify(userUpdateObj),
       });
-      const responseObj = await response.json();
-      !responseObj.success
-        ? alert("Could not update your user profile.")
-        : alert("Information updated!");
+      alert("Information updated!");
     } catch (err) {
       alert("Could not find your zipcode's corresponding zone.");
       console.error(err);

@@ -7,24 +7,14 @@ export const getUser = async (email) =>
   (await db.any("SELECT * FROM users WHERE email = $1;", [email]))[0];
 
 export const updateUser = async (user) => {
-  try {
-    await db.none(
-      "UPDATE users SET username = ${username}, phone = ${phone}, zipcode = ${zipcode}, email = ${email}, zone = ${zone}, showprofile = ${showprofile} WHERE email = ${email};",
-      user,
-    );
-    return true;
-  } catch (err) {
-    console.error(err);
-    return false;
-  }
+  await db.none(
+    "UPDATE users SET username = ${username}, phone = ${phone}, zipcode = ${zipcode}, email = ${email}, zone = ${zone}, showprofile = ${showprofile} WHERE email = ${email};",
+    user,
+  );
 };
 
 export const createUser = async (email) => {
-  try {
-    await db.any("INSERT INTO users (email) VALUES ($1);", [email])[0];
-  } catch (err) {
-    console.log(err);
-  }
+  await db.any("INSERT INTO users (email) VALUES ($1);", [email])[0];
 };
 
 export const getPlants = async (zone) =>
@@ -33,12 +23,11 @@ export const getPlants = async (zone) =>
     [zone],
   );
 
-export const addPlant = async (container) => {
+export const addPlant = async (container) =>
   await db.any("INSERT INTO containers (user_id, plant_id) VALUES ($1, $2);", [
     container.userid,
     container.plantid,
   ])[0];
-};
 
 export const getSavedPlants = async (userid) =>
   await db.any(

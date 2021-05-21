@@ -44,6 +44,18 @@ export const addPlant = async (token, userid, plantid) => {
   return await response.json();
 };
 
+export const removePlant = async (token, userid, plantid) => {
+  const response = await fetch("/api/plant/", {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ userid, plantid }),
+  });
+  return await response.json();
+};
+
 export const getSavedPlants = async (token, userid) => {
   const response = await fetch(`/api/user/plants/${userid}`, {
     headers: {

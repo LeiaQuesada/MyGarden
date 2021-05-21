@@ -2,16 +2,11 @@ import React, { useState, useEffect } from "react";
 
 import "../styles.css";
 import { useAuth0 } from "@auth0/auth0-react";
-import {
-  Button,
-  Card,
-  GridList,
-  GridListTile,
-  GridListTileBar,
-} from "@material-ui/core";
+import { GridList, GridListTile, GridListTileBar } from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
 import { makeStyles } from "@material-ui/core/styles";
 import AddBox from "@material-ui/icons/AddBox";
+import Remove from "@material-ui/icons/Remove";
 
 import * as apiClient from "../apiClient";
 
@@ -25,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
   gridList: {
     width: 800,
-    height: 470,
+    height: 800,
   },
   icon: {
     color: "rgba(255, 255, 255, 0.54)",
@@ -38,7 +33,7 @@ export default function PlantRecommendations() {
   const [plants, setPlants] = useState([]);
   const [token, setToken] = useState("");
   const [userid, setUserid] = useState(0);
-  const [plantButtonsDisabled, setPlantButtonsDisabled] = useState([]);
+  const [savedPlants, setSavedPlants] = useState([]);
 
   const { user, getAccessTokenSilently } = useAuth0();
 
@@ -56,10 +51,16 @@ export default function PlantRecommendations() {
     fetchData();
   }, [user, getAccessTokenSilently]);
 
-  const handleAddPlant = (plantid) => {
-    apiClient.addPlant(token, userid, plantid);
-    // keep track of an array of booleans that is keyed on the value,
-    setPlantButtonsDisabled([...plantButtonsDisabled, plantid]);
+  const handleAddRemovePlant = (plantid) => {
+    if (savedPlants.indexOf(plantid) >= 0) {
+      apiClient.removePlant(token, userid, plantid);
+      const plantIdx = savedPlants.indexOf(plantid);
+      const newPlants = savedPlants.splice(plantIdx, 1);
+      setSavedPlants(newPlants);
+    } else {
+      apiClient.addPlant(token, userid, plantid);
+      setSavedPlants([...savedPlants, plantid]);
+    }
   };
 
   // PFAF data keys lookups
@@ -130,10 +131,22 @@ export default function PlantRecommendations() {
                   <IconButton
                     aria-label={`Add`}
                     className={classes.icon}
-                    disabled={plantButtonsDisabled.indexOf(plant.id) >= 0}
-                    onClick={() => handleAddPlant(plant.id)}
+                    onClick={() => handleAddRemovePlant(plant.id)}
                   >
-                    <AddBox />
+                    <AddBox
+                      style={
+                        savedPlants.indexOf(plant.id) >= 0
+                          ? { display: "none" }
+                          : {}
+                      }
+                    />
+                    <Remove
+                      style={
+                        savedPlants.indexOf(plant.id) >= 0
+                          ? {}
+                          : { display: "none" }
+                      }
+                    />
                   </IconButton>
                 }
               />

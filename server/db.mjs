@@ -27,6 +27,12 @@ export const addPlant = async (container) =>
     container.plantid,
   ])[0];
 
+export const removePlant = async (container) =>
+  await db.any("DELETE FROM containers WHERE user_id = $1 AND plant_id = $2;", [
+    container.userid,
+    container.plantid,
+  ])[0];
+
 export const getSavedPlants = async (userid) =>
   await db.any(
     "SELECT DISTINCT containers.plant_id, plants.* FROM containers RIGHT JOIN plants ON containers.plant_id = plants.id WHERE containers.user_id = $1;",

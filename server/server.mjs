@@ -58,6 +58,11 @@ plant.post("/", async (request, response) => {
   response.status(200).json(plant);
 });
 
+plant.delete("/", async (request, response) => {
+  const plant = await db.removePlant(request.body);
+  response.status(200).json(plant);
+});
+
 app.use("/api/plant", checkJwt, plant);
 
 process.env?.SERVE_REACT?.toLowerCase() === "true" &&

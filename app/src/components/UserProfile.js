@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import "../styles.css";
 
 import { useAuth0 } from "@auth0/auth0-react";
+import Snackbar from "@material-ui/core/Snackbar";
+import { Alert } from "@material-ui/lab";
 import { useHistory } from "react-router-dom";
 
 import * as apiClient from "../apiClient";
@@ -41,7 +43,7 @@ export default function UserProfile() {
   const updateUser = async (event) => {
     event.preventDefault();
     if (/^\d{5}$/.test(zipcode) === false) {
-      alert("Please enter valid 5 digit zipcode.");
+      makeToast("Please enter valid 5 digit zipcode.", "error");
       return false;
     }
     try {
@@ -63,11 +65,22 @@ export default function UserProfile() {
         },
         body: JSON.stringify(userUpdateObj),
       });
-      alert("Information updated!");
+      makeToast("Information updated!", "success");
     } catch (err) {
-      alert("Could not find your zipcode's corresponding zone.");
+      makeToast("Could not find your zipcode's corresponding zone.", "error");
       console.error(err);
     }
+  };
+
+  const [snackbarIsOpen, setSnackbarIsOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
+  const makeToast = (message, severity) => {
+    if (severity) {
+      setSnackbarSeverity(severity);
+    }
+    setSnackbarMessage(message);
+    setSnackbarIsOpen(true);
   };
 
   return (
@@ -114,6 +127,22 @@ export default function UserProfile() {
               <button id="upper" type="submit">
                 Update
               </button>
+              <Snackbar
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "center",
+                }}
+                open={snackbarIsOpen}
+                autoHideDuration={3000}
+                onClose={() => setSnackbarIsOpen(false)}
+              >
+                <Alert
+                  onClose={() => setSnackbarIsOpen(false)}
+                  severity={snackbarSeverity}
+                >
+                  {snackbarMessage}
+                </Alert>
+              </Snackbar>
               <button onClick={showRecommendations}>
                 Show Recommendations
               </button>

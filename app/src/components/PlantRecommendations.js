@@ -2,7 +2,12 @@ import React, { useState, useEffect } from "react";
 
 import "../styles.css";
 import { useAuth0 } from "@auth0/auth0-react";
-import { GridList, GridListTile, GridListTileBar } from "@material-ui/core";
+import {
+  GridList,
+  GridListTile,
+  GridListTileBar,
+  useMediaQuery,
+} from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
 import { makeStyles } from "@material-ui/core/styles";
 import AddBox from "@material-ui/icons/AddBox";
@@ -115,11 +120,20 @@ export default function PlantRecommendations() {
     }
   };
 
+  const isMobile = useMediaQuery("(max-width:600px)");
+  const isWide = useMediaQuery("(min-width:1080px)");
+  let cols = 2;
+  if (isMobile) {
+    cols = 1;
+  } else if (isWide) {
+    cols = 4;
+  }
+
   return (
     <>
       <h2 style={{ textAlign: "center" }}>Plant Recommendations</h2>
       <div className={classes.root}>
-        <GridList cellHeight={300} className={classes.gridList}>
+        <GridList cellHeight={300} className={classes.gridList} cols={cols}>
           {plants.map((plant) => {
             const growth_rate = lookup(plant, "growth_rate"),
               soil = lookup(plant, "soil"),

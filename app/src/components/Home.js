@@ -23,7 +23,6 @@ export default function Home() {
   useEffect(() => {
     async function showProfile() {
       const token = await getAccessTokenSilently();
-      console.log(token);
       const userObj = await apiClient.getUser(token, user.email, user.zone);
       setUserid(userObj.id);
       setToken(token);

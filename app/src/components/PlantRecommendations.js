@@ -102,6 +102,19 @@ export default function PlantRecommendations() {
     N: "Neutral soils",
     B: "Basic (alkaline) soils.",
   };
+
+  const imageProxyUrl = (imageUrl) => {
+    if (!imageUrl) {
+      return imageUrl;
+    }
+    if (new URL(imageUrl).protocol === "http:") {
+      return imageUrl.replace("http://", "https://");
+    }
+    if (imageUrl.includes("bs.floristic.org")) {
+      return "/plant_image" + new URL(imageUrl).pathname;
+    }
+  };
+
   return (
     <>
       <h2 style={{ textAlign: "center" }}>Plant Recommendations</h2>
@@ -116,7 +129,11 @@ export default function PlantRecommendations() {
 
             return (
               <GridListTile key={plant.id}>
-                <img src={plant.image_url} alt={plant.common_name} />
+                <img
+                  srcSet={imageProxyUrl(plant.image_url)}
+                  alt={plant.common_name}
+                  loading="lazy"
+                />
                 <GridListTileBar
                   title={plant.common_name}
                   subtitle={

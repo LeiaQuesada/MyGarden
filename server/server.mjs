@@ -1,5 +1,6 @@
 import express from "express";
 import jwt from "express-jwt";
+import { createProxyMiddleware } from "http-proxy-middleware";
 import jwksRsa from "jwks-rsa";
 import mime from "mime-types";
 
@@ -64,6 +65,17 @@ plant.delete("/", async (request, response) => {
 });
 
 app.use("/api/plant", checkJwt, plant);
+
+// hack to work around expired certificate at https://bs.floristic.org/
+app.use(
+  "/plant_image",
+  createProxyMiddleware({
+    target: "http://bs.floristic.org/",
+    pathRewrite: {
+      "^/plant_image/": "/", // rewrite path
+    },
+  }),
+);
 
 process.env?.SERVE_REACT?.toLowerCase() === "true" &&
   app.use(

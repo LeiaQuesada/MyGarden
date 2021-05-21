@@ -8,7 +8,7 @@ export const getUser = async (email) =>
 
 export const updateUser = async (user) =>
   await db.none(
-    "UPDATE users SET username = ${username}, phone = ${phone}, zipcode = ${zipcode}, email = ${email}, zone = ${zone}, showprofile = ${showprofile} WHERE email = ${email};",
+    "UPDATE users SET username = ${username}, zipcode = ${zipcode}, email = ${email}, zone = ${zone}, showprofile = ${showprofile} WHERE email = ${email};",
     user,
   );
 

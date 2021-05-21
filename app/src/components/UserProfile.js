@@ -10,7 +10,6 @@ export default function UserProfile() {
 
   const [state, setState] = useState({
     username: "",
-    phone: "",
     zipcode: "",
     zone: "",
   });
@@ -24,7 +23,7 @@ export default function UserProfile() {
     });
   }
 
-  const { username, phone, zipcode, zone } = state;
+  const { username, zipcode, zone } = state;
 
   useEffect(() => {
     async function fetchData() {
@@ -90,22 +89,12 @@ export default function UserProfile() {
         <form onSubmit={updateUser}>
           <div className="form-control">
             <label>
-              Your Preferred Name
+              Preferred Name
               <br />
               <input
                 type="text"
                 name="username"
                 value={username}
-                onChange={handleInputChange}
-              />
-            </label>
-            <label>
-              Phone Number for Text Alerts
-              <br />
-              <input
-                type="tel"
-                name="phone"
-                value={phone}
                 onChange={handleInputChange}
               />
             </label>

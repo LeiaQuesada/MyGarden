@@ -112,7 +112,7 @@ const SavedPlants = ({ token, userid }) => {
               }
               actionIcon={
                 <IconButton
-                  aria-label={`Delete`}
+                  aria-label={`Remove`}
                   className={classes.icon}
                   onClick={() => handleRemovePlant(plant.id)}
                 >

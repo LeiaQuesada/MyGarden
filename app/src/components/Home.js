@@ -61,7 +61,7 @@ export default function Home() {
         <>
           <h3>Plot Details </h3>
           <Link to="/recommendations">Get Recommended Zone Plants</Link>
-          <h4>Your saved Plants:</h4>
+          <h4>Saved Plants:</h4>
           <SavedPlants userid={userid} token={token} />
         </>
       )}

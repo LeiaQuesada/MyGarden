@@ -22,25 +22,21 @@ const checkJwt = jwt({
   algorithms: ["RS256"],
 });
 
-const user = express.Router();
+app.use(express.json());
 
-user.use(express.json());
+const user = express.Router();
 
 user.get("/:email", async (request, response) => {
   let dbUser = await db.getUser(request.params.email);
   if (dbUser === undefined) {
-    dbUser = db.createUser(request.params.email);
+    dbUser = await db.createUser(request.params.email);
   }
   response.status(200).json(dbUser);
 });
 
 user.post("/", async (request, response) => {
-  const isUserUpdated = await db.updateUser(request.body);
-  if (isUserUpdated) {
-    response.status(200).json({ success: true });
-  } else {
-    response.status(500).json({ success: false });
-  }
+  await db.updateUser(request.body);
+  response.end();
 });
 
 user.get("/plants/:userid", async (request, response) => {
@@ -51,7 +47,6 @@ user.get("/plants/:userid", async (request, response) => {
 app.use("/api/user", checkJwt, user);
 
 const plant = express.Router();
-plant.use(express.json());
 
 plant.get("/:zone", async (request, response) => {
   const plants = await db.getPlants(request.params.zone);

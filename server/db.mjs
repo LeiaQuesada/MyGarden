@@ -6,16 +6,14 @@ const db = initDb();
 export const getUser = async (email) =>
   (await db.any("SELECT * FROM users WHERE email = $1;", [email]))[0];
 
-export const updateUser = async (user) => {
+export const updateUser = async (user) =>
   await db.none(
     "UPDATE users SET username = ${username}, phone = ${phone}, zipcode = ${zipcode}, email = ${email}, zone = ${zone}, showprofile = ${showprofile} WHERE email = ${email};",
     user,
   );
-};
 
-export const createUser = async (email) => {
-  await db.any("INSERT INTO users (email) VALUES ($1);", [email])[0];
-};
+export const createUser = async (email) =>
+  await db.any("INSERT INTO users (email) VALUES ($1) RETURNING *;", [email]);
 
 export const getPlants = async (zone) =>
   await db.any(

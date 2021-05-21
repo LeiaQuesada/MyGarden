@@ -9,13 +9,15 @@ import DeleteForever from "@material-ui/icons/DeleteForever";
 import * as apiClient from "../apiClient";
 
 const useStyles = makeStyles((theme) => ({
-  // root: {
-  //   display: "flex",
-  //   flexWrap: "wrap",
-  //   justifyContent: "space-around",
-  //   overflow: "hidden",
-  //   backgroundColor: theme.palette.background.paper,
-  // },
+  root: {
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "space-around",
+    overflow: "hidden",
+    // backgroundColor: theme.palette.background.paper,
+    background: "border-box",
+    backgroundColor: "#f6eee5",
+  },
   gridList: {
     width: 800,
     height: 470,
@@ -85,22 +87,23 @@ const SavedPlants = ({ token, userid }) => {
   };
 
   return (
-    <GridList cellHeight={300} className={classes.gridList}>
-      {userPlants.map((plant) => {
-        const growth_rate = lookup(plant, "growth_rate"),
-          soil = lookup(plant, "soil"),
-          ph = lookup(plant, "ph"),
-          shade = lookup(plant, "shade"),
-          moisture = lookup(plant, "moisture");
+    <div className={classes.root}>
+      <GridList cellHeight={300} className={classes.gridList}>
+        {userPlants.map((plant) => {
+          const growth_rate = lookup(plant, "growth_rate"),
+            soil = lookup(plant, "soil"),
+            ph = lookup(plant, "ph"),
+            shade = lookup(plant, "shade"),
+            moisture = lookup(plant, "moisture");
 
-        return (
-          <GridListTile key={plant.id}>
-            <img src={plant.image_url} alt={plant.common_name} />
-            <GridListTileBar
-              title={plant.common_name}
-              subtitle={
-                <span>
-                  {`${plant.edible_part || ""}
+          return (
+            <GridListTile key={plant.id}>
+              <img src={plant.image_url} alt={plant.common_name} />
+              <GridListTileBar
+                title={plant.common_name}
+                subtitle={
+                  <span>
+                    {`${plant.edible_part || ""}
                     ${plant.width}cm (w) x
                     ${plant.height}cm (h)
                     ${growth_rate}
@@ -108,22 +111,23 @@ const SavedPlants = ({ token, userid }) => {
                     ${ph}
                     ${shade}
                     ${moisture}`}
-                </span>
-              }
-              actionIcon={
-                <IconButton
-                  aria-label={`Remove`}
-                  className={classes.icon}
-                  onClick={() => handleRemovePlant(plant.id)}
-                >
-                  <DeleteForever />
-                </IconButton>
-              }
-            />
-          </GridListTile>
-        );
-      })}
-    </GridList>
+                  </span>
+                }
+                actionIcon={
+                  <IconButton
+                    aria-label={`Remove`}
+                    className={classes.icon}
+                    onClick={() => handleRemovePlant(plant.id)}
+                  >
+                    <DeleteForever />
+                  </IconButton>
+                }
+              />
+            </GridListTile>
+          );
+        })}
+      </GridList>
+    </div>
   );
 };
 

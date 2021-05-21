@@ -59,10 +59,12 @@ export default function Home() {
         </div>
       ) : (
         <>
-          <h3>Plot Details </h3>
-          <Link to="/recommendations">Get Recommended Zone Plants</Link>
-          <h4>Saved Plants:</h4>
-          <SavedPlants userid={userid} token={token} />
+          <div style={{ textAlign: "center" }}>
+            <h3>Plot Details </h3>
+            <Link to="/recommendations">Get Recommended Zone Plants</Link>
+            <h4>Saved Plants:</h4>
+            <SavedPlants userid={userid} token={token} />
+          </div>
         </>
       )}
     </>

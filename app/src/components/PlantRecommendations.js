@@ -17,10 +17,12 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-around",
     overflow: "hidden",
     backgroundColor: theme.palette.background.paper,
+    background: "border-box",
+    backgroundColor: "#f6eee5",
   },
   gridList: {
-    width: 800,
-    height: 800,
+    width: 1100,
+    height: 700,
   },
   icon: {
     color: "rgba(255, 255, 255, 0.54)",
@@ -102,23 +104,24 @@ export default function PlantRecommendations() {
   };
   return (
     <>
-      <h2>Plant Recommendations</h2>
-      <GridList cellHeight={300} className={classes.gridList}>
-        {plants.map((plant) => {
-          const growth_rate = lookup(plant, "growth_rate"),
-            soil = lookup(plant, "soil"),
-            ph = lookup(plant, "ph"),
-            shade = lookup(plant, "shade"),
-            moisture = lookup(plant, "moisture");
+      <h2 style={{ textAlign: "center" }}>Plant Recommendations</h2>
+      <div className={classes.root}>
+        <GridList cellHeight={300} className={classes.gridList}>
+          {plants.map((plant) => {
+            const growth_rate = lookup(plant, "growth_rate"),
+              soil = lookup(plant, "soil"),
+              ph = lookup(plant, "ph"),
+              shade = lookup(plant, "shade"),
+              moisture = lookup(plant, "moisture");
 
-          return (
-            <GridListTile key={plant.id}>
-              <img src={plant.image_url} alt={plant.common_name} />
-              <GridListTileBar
-                title={plant.common_name}
-                subtitle={
-                  <span>
-                    {`${plant.edible_part || ""}
+            return (
+              <GridListTile key={plant.id}>
+                <img src={plant.image_url} alt={plant.common_name} />
+                <GridListTileBar
+                  title={plant.common_name}
+                  subtitle={
+                    <span>
+                      {`${plant.edible_part || ""}
                     ${plant.width}cm (w) x
                     ${plant.height}cm (h)
                     ${growth_rate}
@@ -126,35 +129,36 @@ export default function PlantRecommendations() {
                     ${ph}
                     ${shade}
                     ${moisture}`}
-                  </span>
-                }
-                actionIcon={
-                  <IconButton
-                    aria-label={`Add or Remove`}
-                    className={classes.icon}
-                    onClick={() => handleAddRemovePlant(plant.id)}
-                  >
-                    <AddBox
-                      style={
-                        savedPlants.indexOf(plant.id) >= 0
-                          ? { display: "none" }
-                          : {}
-                      }
-                    />
-                    <Remove
-                      style={
-                        savedPlants.indexOf(plant.id) >= 0
-                          ? {}
-                          : { display: "none" }
-                      }
-                    />
-                  </IconButton>
-                }
-              />
-            </GridListTile>
-          );
-        })}
-      </GridList>
+                    </span>
+                  }
+                  actionIcon={
+                    <IconButton
+                      aria-label={`Add or Remove`}
+                      className={classes.icon}
+                      onClick={() => handleAddRemovePlant(plant.id)}
+                    >
+                      <AddBox
+                        style={
+                          savedPlants.indexOf(plant.id) >= 0
+                            ? { display: "none" }
+                            : {}
+                        }
+                      />
+                      <Remove
+                        style={
+                          savedPlants.indexOf(plant.id) >= 0
+                            ? {}
+                            : { display: "none" }
+                        }
+                      />
+                    </IconButton>
+                  }
+                />
+              </GridListTile>
+            );
+          })}
+        </GridList>
+      </div>
     </>
   );
 }

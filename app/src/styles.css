@@ -10,8 +10,7 @@ h4 {
   font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Oxygen", "Ubuntu",
     "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
 }
-
-.header {
+header {
   background: #cdded6;
   text-align: center;
   flex-wrap: wrap;
@@ -21,6 +20,16 @@ h4 {
   top: 0;
   left: 0;
   right: 0;
+}
+
+footer {
+  background: #cdded6;
+  padding: 2px;
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  right: 0;
+  /* margin: 7px; */
 }
 
 #user-info {
@@ -85,7 +94,7 @@ form {
   float: right;
 }
 
-.plantcards {
+/* .plantcards {
   display: flex;
   align-items: flex-end;
   align-content: space-evenly;
@@ -96,14 +105,4 @@ form {
 .plantcard {
   flex-wrap: wrap;
   margin: 0.4rem;
-}
-
-footer {
-  background: #cdded6;
-  padding: 2px;
-  bottom: 0;
-  left: 0;
-  position: fixed;
-  right: 0;
-  margin: 7px;
-}
+} */

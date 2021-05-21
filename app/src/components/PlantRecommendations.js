@@ -54,8 +54,9 @@ export default function PlantRecommendations() {
   const handleAddRemovePlant = (plantid) => {
     if (savedPlants.indexOf(plantid) >= 0) {
       apiClient.removePlant(token, userid, plantid);
+      const newPlants = [...savedPlants];
       const plantIdx = savedPlants.indexOf(plantid);
-      const newPlants = savedPlants.splice(plantIdx, 1);
+      newPlants.splice(plantIdx, 1);
       setSavedPlants(newPlants);
     } else {
       apiClient.addPlant(token, userid, plantid);
@@ -129,7 +130,7 @@ export default function PlantRecommendations() {
                 }
                 actionIcon={
                   <IconButton
-                    aria-label={`Add`}
+                    aria-label={`Add or Remove`}
                     className={classes.icon}
                     onClick={() => handleAddRemovePlant(plant.id)}
                   >

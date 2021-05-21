@@ -2,7 +2,9 @@ import React, { useState, useEffect } from "react";
 
 import "../styles.css";
 import { GridList, GridListTile, GridListTileBar } from "@material-ui/core";
+import IconButton from "@material-ui/core/IconButton";
 import { makeStyles } from "@material-ui/core/styles";
+import DeleteForever from "@material-ui/icons/DeleteForever";
 
 import * as apiClient from "../apiClient";
 
@@ -35,6 +37,16 @@ const SavedPlants = ({ token, userid }) => {
       displaySavedPlants();
     }
   }, [token, userid]);
+
+  const handleRemovePlant = (plantid) => {
+    apiClient.removePlant(token, userid, plantid);
+    let newPlants = [...userPlants];
+    const plantIdx = userPlants.findIndex((plant) => plant.id === plantid);
+    if (plantIdx !== undefined) {
+      newPlants.splice(plantIdx, 1);
+      setUserPlants(newPlants);
+    }
+  };
   // PFAF data keys lookups
   const lookup = (keyObj, keyName) => {
     let obj = {};
@@ -71,6 +83,7 @@ const SavedPlants = ({ token, userid }) => {
     N: "Neutral soils",
     B: "Basic (alkaline) soils.",
   };
+
   return (
     <GridList cellHeight={300} className={classes.gridList}>
       {userPlants.map((plant) => {
@@ -96,6 +109,15 @@ const SavedPlants = ({ token, userid }) => {
                     ${shade}
                     ${moisture}`}
                 </span>
+              }
+              actionIcon={
+                <IconButton
+                  aria-label={`Delete`}
+                  className={classes.icon}
+                  onClick={() => handleRemovePlant(plant.id)}
+                >
+                  <DeleteForever />
+                </IconButton>
               }
             />
           </GridListTile>

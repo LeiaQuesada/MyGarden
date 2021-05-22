@@ -1,3 +1,5 @@
+import * as path from "path";
+
 import express from "express";
 import jwt from "express-jwt";
 import { createProxyMiddleware } from "http-proxy-middleware";
@@ -90,6 +92,10 @@ process.env?.SERVE_REACT?.toLowerCase() === "true" &&
 app.get("/api/ping", (request, response) =>
   response.json({ response: "pong" }),
 );
+
+app.get("/*", function (req, res) {
+  res.sendFile(path.join(__dirname, "build", "index.html"));
+});
 
 app.listen(port, () => {
   console.info(`Example server listening at http://localhost:${port}`);

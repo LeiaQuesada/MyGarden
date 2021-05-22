@@ -130,8 +130,9 @@ export default function PlantRecommendations() {
   }
 
   return (
-    <>
-      <h2 style={{ textAlign: "center" }}>Plant Recommendations</h2>
+    <div style={{ textAlign: "center" }}>
+      <h2>Plant Recommendations</h2>
+      <p>To save a plant, click the add icon</p>
       <div className={classes.root}>
         <GridList cellHeight={300} className={classes.gridList} cols={cols}>
           {plants.map((plant) => {
@@ -190,6 +191,6 @@ export default function PlantRecommendations() {
           })}
         </GridList>
       </div>
-    </>
+    </div>
   );
 }

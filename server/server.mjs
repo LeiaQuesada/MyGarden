@@ -94,7 +94,7 @@ app.get("/api/ping", (request, response) =>
 );
 
 app.get("/*", function (req, res) {
-  res.sendFile(path.join(path.resolve(), "build", "index.html"));
+  res.sendFile(path.join(path.resolve(), "..", "app", "index.html"));
 });
 
 app.listen(port, () => {

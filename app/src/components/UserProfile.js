@@ -115,7 +115,7 @@ export default function UserProfile() {
               />
             </label>
             <label>
-              Please input Zip Code to find your USDA Zone:
+              Input Zip Code to find your USDA Zone:
               <br />
               <input
                 type="number"

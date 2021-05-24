@@ -54,8 +54,7 @@ export default function Home() {
               app serves to remove the hassles of researching how to grow
               vegetables and herbs and provides gardening recommendations based
               on your selections. This way, you can focus on the more relaxed
-              motions of building and watching your efforts literally come to
-              fruition.
+              motions of building and watching your efforts come to fruition.
             </p>
             <button onClick={loginWithRedirect}>Sign up / Log In</button>
           </div>
@@ -63,9 +62,14 @@ export default function Home() {
       ) : (
         <>
           <div style={{ textAlign: "center" }}>
-            <h3>Plot Details </h3>
-            <Link to="/recommendations">Get Recommended Zone Plants</Link>
-            <h4>Saved Plants:</h4>
+            <h3>Your Saved Plants </h3>
+            <Link to="/profile">
+              Click here to Update your Zipcode and Start Gardening
+            </Link>
+            <br />
+            <br />
+            <Link to="/recommendations">Go To Recommended Zone Plants</Link>
+            {<h4>Plants Details:</h4>}
             <SavedPlants userid={userid} token={token} />
           </div>
         </>

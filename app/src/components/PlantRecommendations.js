@@ -109,7 +109,7 @@ export default function PlantRecommendations() {
 
   const imageProxyUrl = (imageUrl) => {
     if (!imageUrl) {
-      return imageUrl;
+      return "spinach.png";
     }
     if (new URL(imageUrl).protocol === "http:") {
       return imageUrl.replace("http://", "https://");

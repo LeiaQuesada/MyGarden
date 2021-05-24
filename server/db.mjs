@@ -17,7 +17,7 @@ export const createUser = async (email) =>
 
 export const getPlants = async (zone) =>
   await db.any(
-    "SELECT * FROM plants WHERE edibility > 3 AND CAST (split_part(zone, '-', 1) AS INTEGER) < $1 AND CAST(split_part(zone, '-', 2) AS INTEGER) > $1 ORDER BY edibility DESC, width LIMIT 32;",
+    "SELECT * FROM plants WHERE edibility > 3 AND CAST (split_part(zone, '-', 1) AS INTEGER) < $1 AND CAST(split_part(zone, '-', 2) AS INTEGER) > $1 ORDER BY edibility DESC;",
     [zone],
   );
 

@@ -19,7 +19,6 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: "wrap",
     justifyContent: "space-around",
     overflow: "hidden",
-    // backgroundColor: theme.palette.background.paper,
     background: "border-box",
     backgroundColor: "#f6eee5",
   },
@@ -118,8 +117,8 @@ const SavedPlants = ({ token, userid }) => {
                 subtitle={
                   <span>
                     {`${plant.edible_part || ""}
-                    ${plant.width}cm (w) x
-                    ${plant.height}cm (h)
+                    ${plant.width}m (w) x
+                    ${plant.height}m (h)
                     ${growth_rate}
                     ${soil}
                     ${ph}

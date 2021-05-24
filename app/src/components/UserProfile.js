@@ -88,7 +88,9 @@ export default function UserProfile() {
     <>
       <div className="outer">
         <div id="userZone">
-          <h3>
+          <img id="userpic" src={user.picture} alt={user.name} />
+
+          <p style={{ fontSize: "1.5rem" }}>
             {!zone
               ? `Enter zipcode to find your zone`
               : `${
@@ -96,7 +98,7 @@ export default function UserProfile() {
                     ? username
                     : user.email.slice(0, user.email.indexOf("@"))
                 }'s Zone: ${zone}`}
-          </h3>
+          </p>
         </div>
       </div>
       <div className="UserProfile">
@@ -150,7 +152,6 @@ export default function UserProfile() {
               <button onClick={showRecommendations}>
                 Your Recommendations
               </button>
-              <img id="userpic" src={user.picture} alt={user.name} />
               <button
                 onClick={() => logout({ returnTo: window.location.origin })}
               >

@@ -37,7 +37,7 @@ footer {
 }
 
 #userpic {
-  width: 15%;
+  width: 35%;
   margin: 0 0 0.2rem 0;
   padding-top: 5%;
   padding-left: 43%;
@@ -54,6 +54,16 @@ button {
     "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
 }
 
+.signIn {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.signInContent {
+  width: 60%;
+  max-width: 800px;
+}
 form {
   width: 80%;
   max-width: 800px;
@@ -112,6 +122,16 @@ nav {
 @media only screen and (max-width: 400px) {
   header {
     display: flex;
+  }
+  .signIn {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .signInContent {
+    width: 90%;
+    max-width: 800px;
   }
   .logo {
     padding-top: 5px;

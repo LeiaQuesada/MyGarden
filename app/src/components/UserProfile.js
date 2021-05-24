@@ -82,6 +82,7 @@ export default function UserProfile() {
     setSnackbarMessage(message);
     setSnackbarIsOpen(true);
   };
+  const { logout } = useAuth0();
 
   return (
     <>
@@ -112,7 +113,7 @@ export default function UserProfile() {
               />
             </label>
             <label>
-              Zip Code
+              Please input Zip Code to find your USDA Zone:
               <br />
               <input
                 type="number"
@@ -125,7 +126,7 @@ export default function UserProfile() {
             <br />
             <div id="options">
               <button id="upper" type="submit">
-                Update
+                Update/Save your information
               </button>
               <Snackbar
                 anchorOrigin={{
@@ -143,8 +144,17 @@ export default function UserProfile() {
                   {snackbarMessage}
                 </Alert>
               </Snackbar>
+              <p>
+                To see plant recommendations for your Zone above click below
+              </p>
               <button onClick={showRecommendations}>
-                Show Recommendations
+                Your Recommendations
+              </button>
+              <img id="userpic" src={user.picture} alt={user.name} />
+              <button
+                onClick={() => logout({ returnTo: window.location.origin })}
+              >
+                Log Out
               </button>
             </div>
           </div>

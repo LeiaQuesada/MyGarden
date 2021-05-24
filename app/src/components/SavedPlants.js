@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from "react";
 
 import "../styles.css";
-import { GridList, GridListTile, GridListTileBar } from "@material-ui/core";
+import {
+  GridList,
+  GridListTile,
+  GridListTileBar,
+  useMediaQuery,
+} from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
 import { makeStyles } from "@material-ui/core/styles";
 import DeleteForever from "@material-ui/icons/DeleteForever";
@@ -19,8 +24,8 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#f6eee5",
   },
   gridList: {
-    width: 800,
-    height: 470,
+    width: 1100,
+    height: 700,
   },
   icon: {
     color: "rgba(255, 255, 255, 0.54)",
@@ -86,9 +91,18 @@ const SavedPlants = ({ token, userid }) => {
     B: "Basic (alkaline) soils.",
   };
 
+  const isMobile = useMediaQuery("(max-width:600px)");
+  const isWide = useMediaQuery("(min-width:1080px)");
+  let cols = 2;
+  if (isMobile) {
+    cols = 1;
+  } else if (isWide) {
+    cols = 4;
+  }
+
   return (
     <div className={classes.root}>
-      <GridList cellHeight={300} className={classes.gridList}>
+      <GridList cellHeight={300} className={classes.gridList} cols={cols}>
         {userPlants.map((plant) => {
           const growth_rate = lookup(plant, "growth_rate"),
             soil = lookup(plant, "soil"),

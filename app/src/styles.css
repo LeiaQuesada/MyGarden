@@ -5,11 +5,15 @@ body {
 h1,
 h2,
 h3,
-h4 {
+h4,
+p,
+a,
+label {
   color: #30485f;
   font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Oxygen", "Ubuntu",
     "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
 }
+
 header {
   background: #cdded6;
   text-align: center;
@@ -29,17 +33,14 @@ footer {
   left: 0;
   position: fixed;
   right: 0;
-  /* margin: 7px; */
-}
-
-#user-info {
-  float: right;
+  margin: 7px;
 }
 
 #userpic {
-  width: 4rem;
+  width: 15%;
   margin: 0 0 0.2rem 0;
-  border-radius: 4px;
+  padding-top: 5%;
+  padding-left: 43%;
 }
 
 button {
@@ -86,23 +87,52 @@ form {
   display: flex;
 }
 
-.left {
+.logoName {
   float: left;
-}
-
-.right {
-  float: right;
-}
-
-/* .plantcards {
   display: flex;
-  align-items: flex-end;
-  align-content: space-evenly;
-  font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Oxygen", "Ubuntu",
-    "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
 }
 
-.plantcard {
-  flex-wrap: wrap;
-  margin: 0.4rem;
-} */
+.logo {
+  padding-top: 20px;
+  padding-right: 10px;
+}
+
+nav {
+  display: flex;
+}
+
+@media only screen and (min-width: 399px) {
+  .links {
+    flex-wrap: wrap;
+    -ms-flex-align: centers;
+    padding-top: 35px;
+    padding-right: 35px;
+  }
+}
+@media only screen and (max-width: 400px) {
+  header {
+    display: flex;
+  }
+  .logo {
+    padding-top: 5px;
+    padding-right: 5px;
+  }
+  nav {
+    font-size: x-small;
+  }
+  .links {
+    flex-direction: column;
+    padding-top: 5px;
+    padding-right: 5px;
+    justify-content: center;
+  }
+  h1 {
+    display: none;
+  }
+  #userpic {
+    width: 20%;
+    margin: 7px;
+    border-radius: 4px;
+    padding-left: 40%;
+  }
+}

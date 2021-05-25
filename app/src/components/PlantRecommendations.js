@@ -117,6 +117,7 @@ export default function PlantRecommendations() {
     if (imageUrl.includes("bs.floristic.org")) {
       return "/plant_image" + new URL(imageUrl).pathname;
     }
+    return imageUrl;
   };
 
   const isMobile = useMediaQuery("(max-width:600px)");

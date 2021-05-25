@@ -69,6 +69,15 @@ plant.delete("/", async (request, response) => {
 app.use("/api/plant", checkJwt, plant);
 
 // hack to work around expired certificate at https://bs.floristic.org/
+const onProxyRes = (proxyRes, req, res) => {
+  if (proxyRes.statusCode > 400) {
+    // catch errors and return default image
+    res.sendFile(path.join(path.resolve(), "..", "app", "spinach.png"));
+  } else {
+    proxyRes.pipe(res);
+  }
+};
+
 app.use(
   "/plant_image",
   createProxyMiddleware({
@@ -76,6 +85,8 @@ app.use(
     pathRewrite: {
       "^/plant_image/": "/", // rewrite path
     },
+    selfHandleResponse: true,
+    onProxyRes: onProxyRes,
   }),
 );
 

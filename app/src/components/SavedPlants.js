@@ -111,7 +111,11 @@ const SavedPlants = ({ token, userid }) => {
 
           return (
             <GridListTile key={plant.id}>
-              <img src={plant.image_url} alt={plant.common_name} />
+              <img
+                srcSet={apiClient.imageProxyUrl(plant.image_url)}
+                alt={plant.common_name}
+                loading="lazy"
+              />
               <GridListTileBar
                 title={plant.common_name}
                 subtitle={

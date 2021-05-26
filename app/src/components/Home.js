@@ -62,9 +62,9 @@ export default function Home() {
       ) : (
         <>
           <div style={{ textAlign: "center" }}>
-            <h3>Your Saved Plants </h3>
+            <h3>Your Plants</h3>
             <Link to="/profile">
-              Click here to Update your Zipcode and Start Gardening
+              Enter your zipcode to get Plant recommendations
             </Link>
             <br />
             <br />

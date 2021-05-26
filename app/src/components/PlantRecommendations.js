@@ -107,19 +107,6 @@ export default function PlantRecommendations() {
     B: "Basic (alkaline) soils.",
   };
 
-  const imageProxyUrl = (imageUrl) => {
-    if (!imageUrl) {
-      return "spinach.png";
-    }
-    if (new URL(imageUrl).protocol === "http:") {
-      return imageUrl.replace("http://", "https://");
-    }
-    if (imageUrl.includes("bs.floristic.org")) {
-      return "/plant_image" + new URL(imageUrl).pathname;
-    }
-    return imageUrl;
-  };
-
   const isMobile = useMediaQuery("(max-width:600px)");
   const isWide = useMediaQuery("(min-width:1080px)");
   let cols = 2;
@@ -145,7 +132,7 @@ export default function PlantRecommendations() {
             return (
               <GridListTile key={plant.id}>
                 <img
-                  srcSet={imageProxyUrl(plant.image_url)}
+                  srcSet={apiClient.imageProxyUrl(plant.image_url)}
                   alt={plant.common_name}
                   loading="lazy"
                 />

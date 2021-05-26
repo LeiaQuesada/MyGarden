@@ -23,6 +23,19 @@ export const getUser = async (token, email) => {
   return await response.json();
 };
 
+export const imageProxyUrl = (imageUrl) => {
+  if (!imageUrl) {
+    return "spinach.png";
+  }
+  if (new URL(imageUrl).protocol === "http:") {
+    return imageUrl.replace("http://", "https://");
+  }
+  if (imageUrl.includes("bs.floristic.org")) {
+    return "/plant_image" + new URL(imageUrl).pathname;
+  }
+  return imageUrl;
+};
+
 export const getPlants = async (token, zone) => {
   const response = await fetch(`/api/plant/${zone}`, {
     headers: {

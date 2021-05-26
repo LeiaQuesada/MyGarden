@@ -40,7 +40,7 @@ footer {
   width: 35%;
   margin: 0 0 0.2rem 0;
   padding-top: 5%;
-  padding-left: 43%;
+  padding-left: 35%;
 }
 
 button {
@@ -153,7 +153,6 @@ nav {
   #userpic {
     width: 20%;
     margin: 7px;
-    border-radius: 4px;
     padding-left: 40%;
   }
 }

@@ -36,7 +36,7 @@ export default function App() {
           <Route path="/" exact component={Home} />
         </Switch>
       </Router>
-      <footer>Disclaimer © 2021</footer>
+      {/* <footer>Disclaimer © 2021</footer> */}
     </>
   );
 }

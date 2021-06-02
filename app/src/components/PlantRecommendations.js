@@ -8,7 +8,9 @@ import {
   GridListTileBar,
   useMediaQuery,
 } from "@material-ui/core";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
 import IconButton from "@material-ui/core/IconButton";
+import Switch from "@material-ui/core/Switch";
 import { makeStyles } from "@material-ui/core/styles";
 import AddBox from "@material-ui/icons/AddBox";
 import Remove from "@material-ui/icons/Remove";
@@ -40,6 +42,7 @@ export default function PlantRecommendations() {
   const [token, setToken] = useState("");
   const [userid, setUserid] = useState(0);
   const [savedPlants, setSavedPlants] = useState([]);
+  const [isIndoor, setIsIndoor] = useState(false);
 
   const { user, getAccessTokenSilently } = useAuth0();
 
@@ -52,10 +55,12 @@ export default function PlantRecommendations() {
       if (!userObj.zone) {
         return;
       }
-      setPlants(await apiClient.getPlants(token, parseInt(userObj.zone)));
+      setPlants(
+        await apiClient.getPlants(token, parseInt(userObj.zone), isIndoor),
+      );
     }
     fetchData();
-  }, [user, getAccessTokenSilently]);
+  }, [user, getAccessTokenSilently, isIndoor]);
 
   const handleAddRemovePlant = (plantid) => {
     if (savedPlants.indexOf(plantid) >= 0) {
@@ -116,9 +121,24 @@ export default function PlantRecommendations() {
     cols = 4;
   }
 
+  const handleIndoorChange = (event) => {
+    setIsIndoor(event.target.checked);
+  };
+
   return (
     <div style={{ textAlign: "center" }}>
       <h2>Plant Recommendations</h2>
+      <FormControlLabel
+        control={
+          <Switch
+            checked={isIndoor}
+            onChange={handleIndoorChange}
+            name="checkedB"
+            color="primary"
+          />
+        }
+        label="Indoor"
+      />
       <p>To save a plant, click the add icon</p>
       <div className={classes.root}>
         <GridList cellHeight={300} className={classes.gridList} cols={cols}>

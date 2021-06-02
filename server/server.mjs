@@ -51,8 +51,13 @@ app.use("/api/user", checkJwt, user);
 
 const plant = express.Router();
 
-plant.get("/:zone", async (request, response) => {
-  const plants = await db.getPlants(request.params.zone);
+plant.get("/:zone/:isIndoor", async (request, response) => {
+  let plants;
+  if (request.params.isIndoor === "true") {
+    plants = await db.getIndoorPlants();
+  } else {
+    plants = await db.getPlants(request.params.zone);
+  }
   response.status(200).json(plants);
 });
 

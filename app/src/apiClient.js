@@ -36,8 +36,8 @@ export const imageProxyUrl = (imageUrl) => {
   return imageUrl;
 };
 
-export const getPlants = async (token, zone) => {
-  const response = await fetch(`/api/plant/${zone}`, {
+export const getPlants = async (token, zone, isIndoor) => {
+  const response = await fetch(`/api/plant/${zone}/${isIndoor}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

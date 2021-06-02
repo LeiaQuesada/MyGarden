@@ -22,9 +22,7 @@ export const getPlants = async (zone) =>
   );
 
 export const getIndoorPlants = async () =>
-  await db.any(
-    "SELECT * FROM plants WHERE edibility > 3 AND shade NOT LIKE '%N%';",
-  );
+  await db.any("SELECT * FROM indoorplants;");
 
 export const addPlant = async (container) =>
   await db.any("INSERT INTO containers (user_id, plant_id) VALUES ($1, $2);", [

@@ -52,7 +52,8 @@ export default function PlantRecommendations() {
       const userObj = await apiClient.getUser(token, user.email);
       setToken(token);
       setUserid(userObj.id);
-      if (!userObj.zone) {
+      if (!userObj.zone && !isIndoor) {
+        setPlants([]);
         return;
       }
       setPlants(

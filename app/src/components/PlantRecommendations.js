@@ -162,8 +162,8 @@ export default function PlantRecommendations() {
                   subtitle={
                     <span>
                       {`${plant.edible_part || ""}
-                    ${plant.width}cm (w) x
-                    ${plant.height}cm (h)
+                    ${plant.width}m (w) x
+                    ${plant.height}m (h)
                     ${growth_rate}
                     ${soil}
                     ${ph}

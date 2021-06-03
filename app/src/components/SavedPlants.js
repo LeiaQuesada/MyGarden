@@ -5,11 +5,13 @@ import {
   GridList,
   GridListTile,
   GridListTileBar,
+  Tooltip,
   useMediaQuery,
 } from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
 import { makeStyles } from "@material-ui/core/styles";
 import DeleteForever from "@material-ui/icons/DeleteForever";
+import LinkIcon from "@material-ui/icons/Link";
 
 import * as apiClient from "../apiClient";
 
@@ -131,13 +133,15 @@ const SavedPlants = ({ token, userid }) => {
                   </span>
                 }
                 actionIcon={
-                  <IconButton
-                    aria-label={`Remove`}
-                    className={classes.icon}
-                    onClick={() => handleRemovePlant(plant.id)}
-                  >
-                    <DeleteForever />
-                  </IconButton>
+                  <Tooltip title={`Unsave`}>
+                    <IconButton
+                      aria-label={`Remove`}
+                      className={classes.icon}
+                      onClick={() => handleRemovePlant(plant.id)}
+                    >
+                      <DeleteForever />
+                    </IconButton>
+                  </Tooltip>
                 }
               />
             </GridListTile>

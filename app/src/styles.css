@@ -54,14 +54,17 @@ button {
     "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
 }
 
-.signIn {
+.signIn,
+.userInstructions {
   width: 100%;
   display: flex;
   justify-content: center;
   text-align: center;
+  text-underline-position: under;
 }
 
-.signInContent {
+.signInContent,
+.blurb {
   width: 60%;
   max-width: 800px;
 }

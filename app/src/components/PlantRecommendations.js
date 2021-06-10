@@ -14,6 +14,7 @@ import Switch from "@material-ui/core/Switch";
 import { makeStyles } from "@material-ui/core/styles";
 import AddBox from "@material-ui/icons/AddBox";
 import Remove from "@material-ui/icons/Remove";
+import { Link } from "react-router-dom";
 
 import * as apiClient from "../apiClient";
 
@@ -140,7 +141,20 @@ export default function PlantRecommendations() {
         }
         label="Indoor"
       />
-      <p>To save a plant, click the add icon</p>
+      {plants.length === 0 ? (
+        <div className="userInstructions">
+          <p className="blurb">
+            Click the toggle switch to see indoor plant options, these plants
+            can do well without much sun. You can also get outdoor plants that
+            are hardy to your zone by adding your zip code in your {}
+            <Link className="links" to="/profile">
+              Profile.
+            </Link>
+          </p>
+        </div>
+      ) : (
+        <p>To save a plant, click the add icon</p>
+      )}
       <div className={classes.root}>
         <GridList cellHeight={300} className={classes.gridList} cols={cols}>
           {plants.map((plant) => {

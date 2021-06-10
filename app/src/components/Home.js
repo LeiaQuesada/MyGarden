@@ -8,6 +8,7 @@ import * as apiClient from "../apiClient";
 
 import "../styles.css";
 import SavedPlants from "./SavedPlants";
+import UserProfile from "./UserProfile";
 
 export default function Home() {
   const {
@@ -59,7 +60,7 @@ export default function Home() {
             <button onClick={loginWithRedirect}>Sign up / Log In</button>
           </div>
         </div>
-      ) : (
+      ) : user.zone ? (
         <>
           <div style={{ textAlign: "center" }}>
             <h3>Your Plants</h3>
@@ -73,6 +74,8 @@ export default function Home() {
             <SavedPlants userid={userid} token={token} />
           </div>
         </>
+      ) : (
+        <UserProfile />
       )}
     </>
   );

@@ -11,7 +11,6 @@ import {
 import IconButton from "@material-ui/core/IconButton";
 import { makeStyles } from "@material-ui/core/styles";
 import DeleteForever from "@material-ui/icons/DeleteForever";
-import LinkIcon from "@material-ui/icons/Link";
 
 import * as apiClient from "../apiClient";
 

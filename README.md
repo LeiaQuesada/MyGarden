@@ -64,6 +64,10 @@ again which will delete your existing data and start from scratch.
 
 ## Start your Development Environment
 
+The following command will start up the postgres container with Docker Compose
+Start the backend server
+Start the frontend server
+
 ```sh
 npm start
 ```

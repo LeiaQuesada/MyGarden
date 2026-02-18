@@ -1,8 +1,11 @@
-#!/usr/bin/env ash
+#!/usr/bin/env bash
 
-until pg_isready && psql -l | grep -wc ${POSTGRES_DB}
+# Wait for the postgres container to be healthy
+until docker compose exec postgres pg_isready -U postgres > /dev/null 2>&1
 do
-  sleep 10
+  echo "Waiting for postgres container..."
+  sleep 5
 done
 
-psql ${POSTGRES_DB} < /var/tmp/pg/seed.pgsql
+# Run the seed script inside the container
+docker compose exec postgres bash -c "psql -U postgres -d mygarden < /var/tmp/pg/seed.pgsql"

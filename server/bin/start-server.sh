@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-until docker-compose exec -u postgres db pg_isready > /dev/null
+until docker compose exec -u postgres postgres pg_isready > /dev/null
 do
   sleep 5
 done

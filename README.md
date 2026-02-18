@@ -15,14 +15,6 @@ MyGarden is an application that allows anyone to easily plot an edible garden. U
 This project relies on Docker to run the PostgreSQL server. You must install
 Docker first before continuing.
 
-Use one of these methods:
-
-- Use [Homebrew](https://brew.sh) on macOS:
-
-```sh
-brew install --cask docker
-```
-
 - [Follow the instructions on the Docker website](https://docs.docker.com/get-docker/)
 
 Once you've installed Docker Desktop, you'll need to launch the app. On macOS,

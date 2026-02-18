@@ -5,20 +5,20 @@
   "main": "index.js",
   "scripts": {
     "_db:delete": "rimraf .data/db",
-    "_db:init": "docker-compose exec -u postgres db /var/tmp/pg/load-data.sh",
+    "_db:init": "docker compose exec postgres bash -c 'until pg_isready -U postgres; do sleep 1; done && psql -U postgres'",
     "app:start": "cd app && npm start",
     "db:delete": "run-s db:stop _db:delete",
     "db:init": "run-s db:delete db:start _db:init",
-    "db:start": "docker-compose up -d",
-    "db:stop": "docker-compose down",
+    "db:start": "docker compose up -d",
+    "db:stop": "docker compose down",
     "eslint": "(cd app && npm run eslint); (cd server && npm run eslint)",
     "heroku:dashboard": "open https://dashboard.heroku.com/apps/$(heroku apps | sed -n '2 p')",
     "heroku:deploy": "git push -f heroku HEAD:main",
-    "heroku:psql": "docker-compose run --rm -e DATABASE_URL=$(heroku config:get DATABASE_URL) db /usr/bin/env ash -c 'psql ${DATABASE_URL}'",
+    "heroku:psql": "docker compose run --rm -e DATABASE_URL=$(heroku config:get DATABASE_URL) postgres /usr/bin/env ash -c 'psql ${DATABASE_URL}'",
     "heroku:setup": "bin/setup-heroku.sh",
     "postinstall": "(cd app && npm install); (cd server && npm install)",
     "prettier": "prettier --write .",
-    "psql": "docker-compose exec -u postgres db /bin/ash -c 'psql ${POSTGRES_DB}'",
+    "psql": "docker compose exec -u postgres postgres /bin/ash -c 'psql ${POSTGRES_DB}'",
     "server:start": "cd server && npm start",
     "start": "run-p db:start server:start app:start"
   },
@@ -34,6 +34,8 @@
   "homepage": "https://github.com/leiaquesada/mygarden#readme",
   "dependencies": {
     "npm-run-all": "^4.1.5",
+    "postcss": "^8.5.6",
+    "postcss-safe-parser": "^7.0.1",
     "rimraf": "^3.0.2"
   }
 }
